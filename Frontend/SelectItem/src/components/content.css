@@ -1,3 +1,4 @@
+/* 기존 슬라이드 애니메이션 */
 @keyframes slide-fade-in-dropdown-animation {
   0% {
     transform: translateY(-100%);
@@ -7,6 +8,7 @@
     transform: translateY(0);
   }
 }
+
 .slide-fade-in-dropdown {
   overflow: hidden;
 }
@@ -41,4 +43,31 @@
   margin-bottom: 5px;
   padding-left: 0;
   list-style: none;
+}
+
+/* 체크박스와 아이콘을 수직으로 배치 */
+.checkbox-item {
+  display: flex;
+  flex-direction: column; /* 아이콘을 위에, 체크박스를 아래에 배치 */
+  align-items: center; /* 수평 중앙 정렬 */
+  margin-bottom: 20px; /* 각 체크박스 항목 간의 간격 */
+}
+
+.icon-container {
+  margin-bottom: 10px; /* 체크박스와 아이콘 사이에 간격 */
+}
+
+.checkbox-icon {
+  font-size: 30px; /* 아이콘 크기 조정 */
+}
+
+#checkbox-container input[type="checkbox"] {
+  margin: 0;
+}
+
+/* 체크박스 목록 스타일 */
+.check {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px; /* 섹션 간 간격 */
 }
