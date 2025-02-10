@@ -4,16 +4,17 @@ const Footer = () => {
   return (
     <>
       <div>
-        <h4>
-          ※빌린 양심 물품은 반납일을 기준으로 2일안에 제출하지 않을 시 <br />
-          불이익이 있습니다.
-          <br />
-          <br />
-          ※물품 파손시 배상을 해야하므로 소중하게 다뤄주세요.
-          <br />
-          <br />
-          ※그 밖에 문의 사항은 학생회에 문의하십시요.
-        </h4>
+        <footer className="footer">
+          <div className="footer-links">
+            <p>학생회 인스타:</p>
+            <p>
+              <a href="https://www.instagram.com/os_18_sc?igsh=MWZ0ODZmNWN2OG5yNg==">
+                os_18_sc
+              </a>
+            </p>
+          </div>
+          <p>Made by AI융합부</p>
+        </footer>
       </div>
     </>
   );
