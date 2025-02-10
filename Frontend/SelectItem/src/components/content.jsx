@@ -1,72 +1,33 @@
-import { useState } from "react";
 import "./content.css";
-import DropDownBox from "./DropDown";
-import CheckBox from "./CheckBox";
+import { useLocation } from "react-router-dom";
 
 const Content = () => {
-  const [dropdownValue, setDropdownValue] = useState(null); // 드롭다운에서 선택된 값을 상태로 관리
-  const [disabledCheckboxes, setDisabledCheckboxes] = useState([]); // 비활성화된 체크박스를 추적
-
-  // 드롭다운 값이 변경될 때마다 호출되는 함수
-  const handleDropdownChange = (value) => {
-    const options = ["양심 우산", "양심 슬리퍼"];
-    const index = options.indexOf(value); // 선택된 옵션에 맞는 인덱스 찾기
-    setDropdownValue(index); // 선택된 값을 상태에 저장
-  };
-
-  // 체크박스를 선택하고 제출 버튼을 눌렀을 때 처리
-  const handleSubmit = () => {
-    // 비활성화할 체크박스 번호 추출
-    const disabled = [];
-    const checkboxes = document.querySelectorAll("input[type='checkbox']");
-    checkboxes.forEach((checkbox, index) => {
-      if (checkbox.checked) {
-        disabled.push(index);
-      }
-    });
-    setDisabledCheckboxes(disabled); // 비활성화된 체크박스 번호 상태로 저장
-  };
-
+  const location = useLocation();
   return (
     <>
-      <div id="itemSelect">
-        <DropDownBox onChange={handleDropdownChange} />{" "}
-        {/* onChange로 부모에게 값 전달 */}
-      </div>
-      {/* 드롭다운 값이 선택되었을 때 체크박스를 렌더링 */}
-      {dropdownValue !== null && (
-        <div id="checkbox-container">
-          {renderCheckboxes(dropdownValue, disabledCheckboxes)}{" "}
-          {/* 선택된 값에 맞는 체크박스들 렌더링 */}
+      <div className="Content">
+        <h2>
+          📆 오늘의 날짜:{location} {new Date().toLocaleDateString()}
+        </h2>
+        <div className="line"></div>
+        <h3>대여현황: 없음</h3> {/*없음에 {}추가하고 대여 현황 상태 해놓기*/}
+        <a href="#">
+          <div className="Dayeo">🎒양심 물품 대여하기</div>
+        </a>
+        <div className="text">
+          <h4>
+            ※빌린 양심 물품은 반납일을 기준으로 <span>2일안에</span> 제출하지
+            않을 시 불이익이 있습니다.
+            <br />
+            <br />
+            ※물품 파손시 <span>배상을</span> 해야하므로 소중하게 다뤄주세요.
+            <br />
+            <br />
+            ※그 밖에 문의 사항은 <span>학생회에</span> 문의하십시요.
+          </h4>
         </div>
-      )}
-      <button onClick={handleSubmit}>빌리기</button> {/* 제출 버튼 */}
+      </div>
     </>
   );
 };
-
 export default Content;
-
-// 체크박스 생성 함수
-const renderCheckboxes = (dropdownValue, disabledCheckboxes) => {
-  const name = ["☂️", "🩴"]; // 선택된 값에 맞춰서 사용할 아이콘 배열
-  const checkboxes = [];
-
-  // 10개의 체크박스를 생성
-  for (let i = 0; i < 10; i++) {
-    checkboxes.push(
-      <div key={i} className="checkbox-item">
-        <div className="icon-container">
-          <span className="checkbox-icon">{name[dropdownValue]}</span>{" "}
-          {/* 아이콘을 위에 올림 */}
-        </div>
-        <CheckBox
-          id={`checkbox${i}`}
-          disabled={disabledCheckboxes.includes(i)} // 체크박스가 비활성화되어야 할지 여부를 확인
-        />
-        <label htmlFor={`checkbox${i}`}>{i + 1}</label> {/* 번호만 출력 */}
-      </div>
-    );
-  }
-  return checkboxes; // 체크박스들 반환
-};

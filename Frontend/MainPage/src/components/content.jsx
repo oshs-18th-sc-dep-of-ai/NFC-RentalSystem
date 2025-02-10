@@ -8,7 +8,7 @@ const Content = () => {
         <h3>여러분의 편의를 위해 노력하겠습니다.😊</h3>
         <div className="line"></div>
         <h3>대여현황: 없음</h3> {/*없음에 {}추가하고 대여 현황 상태 해놓기*/}
-        <a href="#">
+        <a href="./Frontend/SelectItem">
           <div className="Dayeo">🎒양심 물품 대여하기</div>
         </a>
         <div className="text">
