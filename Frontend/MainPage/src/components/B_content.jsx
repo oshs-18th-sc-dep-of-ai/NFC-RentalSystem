@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import "./content.css";
+import "./B_content.css";
 
-const RentalSystem = () => {
+const Content = () => {
   const [selectedItem, setSelectedItem] = useState(null);
-  const [items, setItems] = useState({
+  const [items] = useState({
     umbrella: 30, // 우산 개수
     battery: 30, // 보조배터리 개수
   });
@@ -107,4 +107,4 @@ const RentalSystem = () => {
   );
 };
 
-export default RentalSystem;
+export default Content;
