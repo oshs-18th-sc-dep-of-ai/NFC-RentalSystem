@@ -1,6 +1,6 @@
 -- 학생 테이블 (Students)
 CREATE TABLE Students (
-    student_id VARCHAR(10) PRIMARY KEY,
+    student_id VARCHAR(10) PRIMARY KEY, 
     name VARCHAR(50) NOT NULL,
     password VARCHAR(255) NOT NULL,
     year INT NOT NULL,
