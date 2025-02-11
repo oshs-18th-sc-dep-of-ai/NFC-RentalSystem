@@ -29,7 +29,7 @@ app.register_blueprint(admin_bp, url_prefix='/api/admin')
 # 메인 페이지 리다이렉트 (index → 로그인 페이지)
 @app.route('/')
 def index():
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('login'))
 
 # Flask 실행
 if __name__ == '__main__':
