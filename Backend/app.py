@@ -1,5 +1,5 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, request, redirect, url_for, session, flash
+from flask_mysqldb import MySQL
 from flask_cors import CORS
 
 # Flask 애플리케이션 초기화
@@ -9,11 +9,14 @@ CORS(app)
 # 세션 키 설정
 app.secret_key = 'test'
 
-# 데이터베이스 설정 (MySQL + SQLAlchemy)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:password@localhost/student24_db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# MySQL 설정
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'test'  -> 실제 비밀번호
+app.config['MYSQL_DB'] = 'student24_db'
+app.config['MYSQL_CHARSET'] = 'utf8mb4'
 
-db = SQLAlchemy(app)
+mysql = MySQL(app)
 
 # Blueprint 라우트 등록
 from routes.auth_routes import auth_bp
@@ -29,7 +32,7 @@ app.register_blueprint(admin_bp, url_prefix='/api/admin')
 # 메인 페이지 리다이렉트 (index → 로그인 페이지)
 @app.route('/')
 def index():
-    return redirect(url_for('login'))
+    return redirect(url_for('auth.login'))
 
 # Flask 실행
 if __name__ == '__main__':
