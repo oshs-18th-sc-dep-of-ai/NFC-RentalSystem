@@ -11,11 +11,12 @@ def borrow():
     data = request.json
     student_id = data.get('student_id')
     item_name = data.get('item_name')
-    
-    if not student_id or not item_name:
-        return jsonify({'error': '학번과 대여할 물품을 입력해주세요.'}), 400
-    
-    result = borrow_item(student_id, item_name)
+    item_ids = data.get('item_ids')
+
+    if not student_id or not item_name or not item_ids:
+        return jsonify({'error': '대여할 물품을 선택해 주세요.'}), 400
+
+    result = borrow_item(student_id, item_name, item_ids)
     return jsonify(result)
 
 # 대여 상태 조회 API
