@@ -10,12 +10,11 @@ const Header = () => {
           <Link to="/">
             <h1 className="logo">양심물품대여</h1>
           </Link>
-
           <nav>
             <ul className="nav-links">
-              <a href="#">
+              <Link to={"/MyPage"}>
                 <img className="photoo" alt="오별이" src="ostar.png"></img>
-              </a>
+              </Link>
             </ul>
           </nav>
         </header>

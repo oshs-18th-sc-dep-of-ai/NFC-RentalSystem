@@ -1,7 +1,7 @@
 import "./Borrow.css";
 import React, { useState } from "react";
-import Header from "../components/B_header";
-import Content from "../components/B_content";
+import Header from "../../components/B_header";
+import Content from "../../components/B_content";
 
 function Borrow() {
   return (
