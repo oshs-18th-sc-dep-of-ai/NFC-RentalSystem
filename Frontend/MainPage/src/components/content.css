@@ -8,6 +8,10 @@ a {
   display: flex;
 }
 
+.c {
+  margin: 8px;
+}
+
 .Dayeo {
   border: 1px solid #0077ff;
   border-radius: 5px;

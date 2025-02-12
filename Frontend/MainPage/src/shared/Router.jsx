@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "../pages/Home/Home";
 import Borrow from "../pages/Borrow/Borrow";
 import MyPage from "../pages/MyPage/MyPage";
+import Info from "../pages/MyPage/ChangeInfo";
 
 // 2. Router 라는 함수를 만들고 아래와 같이 작성합니다.
 //BrowserRouter를 Router로 감싸는 이유는,
@@ -15,6 +16,7 @@ const Router = () => {
         <Route path="/" element={<Home />} />
         <Route path="/Borrow" element={<Borrow />} />
         <Route path="/MyPage" element={<MyPage />} />
+        <Route path="/Info" element={<Info />} />
       </Routes>
     </BrowserRouter>
   );

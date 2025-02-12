@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <>
-      <div className="Header">
+      <div className="Bheader">
         <header className="HeaderObj">
           <img className="photo" alt="학생회로고" src="schooljjang.png"></img>
           <Link to={"/"}>
