@@ -1,8 +1,7 @@
 from flask import Blueprint, request, jsonify, session, redirect, url_for, flash
-from flask_sqlalchemy import SQLAlchemy
+from flask_mysqldb import MySQL
 from werkzeug.security import check_password_hash
-from services.auth_service import register_user
-from config import db
+from app import mysql  
 
 # Blueprint 설정
 auth_bp = Blueprint('auth', __name__)
@@ -17,10 +16,10 @@ def login():
     if not student_id or not password:
         return jsonify({'error': '학번과 비밀번호를 입력해주세요.'}), 400
     
-    student = db.session.execute(
-        "SELECT student_id, student_name, student_password FROM Students WHERE student_id = :id",
-        {'id': student_id}
-    ).fetchone()
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT student_id, student_name, student_password FROM Students WHERE student_id = %s", (student_id,))
+    student = cursor.fetchone()
+    cursor.close()
     
     if student and check_password_hash(student[2], password):
         session['session_student_id'] = student[0]  # 학번 저장
