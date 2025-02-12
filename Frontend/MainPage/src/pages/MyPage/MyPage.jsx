@@ -6,7 +6,7 @@ import Content from "../../components/M_content";
 function MyPage() {
   return (
     <>
-      <div className="MyPage">
+      <div className="Mypage">
         <Header />
         <Content />
       </div>
