@@ -1,23 +1,19 @@
 CREATE DATABASE IF NOT EXISTS student24_db;
 USE student24_db;
 
--- 대여 기록 테이블
 CREATE TABLE IF NOT EXISTS Rentals (
-    rental_id INT AUTO_INCREMENT PRIMARY KEY,
-    student_id VARCHAR(20) NOT NULL,  -- 대여한 학생 ID
-    product_id INT NOT NULL,  -- 대여한 물품 ID (Products 테이블 참조)
-    rental_time DATETIME DEFAULT CURRENT_TIMESTAMP,  -- 대여 시간
-    return_time DATETIME DEFAULT NULL,  -- 반납 시간
-    rental_status BOOLEAN DEFAULT TRUE,  -- 1: 대여 중, 0: 반납 완료
-    FOREIGN KEY (student_id) REFERENCES Students(StudentID) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES Products(product_id) ON DELETE CASCADE
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id VARCHAR(20) NOT NULL,
+    product_id INT NOT NULL,
+    rental_rentaltime DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    rental_returntime DATETIME NULL,
+    rental_status TINYINT NOT NULL DEFAULT 1,
+    CONSTRAINT fk_rentals_students FOREIGN KEY (student_id)
+      REFERENCES Students(student_id) ON DELETE CASCADE,
+    CONSTRAINT fk_rentals_products FOREIGN KEY (product_id)
+      REFERENCES Products(product_id) ON DELETE CASCADE
 );
 
--- 2410101 학생이 우산 1번, 14번, 19번, 22번, 대여했을때
-INSERT INTO Rentals (student_id, product_id, rental_status) VALUES
-('2410101', (SELECT product_id FROM Products WHERE category = '우산' AND product_number = 1), 1),
-('2410101', (SELECT product_id FROM Products WHERE category = '우산' AND product_number = 14), 1),
-('2410101', (SELECT product_id FROM Products WHERE category = '우산' AND product_number = 19), 1),
-('2410101', (SELECT product_id FROM Products WHERE category = '우산' AND product_number = 22), 1),
-('2410101', (SELECT product_id FROM Products WHERE category = '우산' AND product_number = 23), 1);
-아졸리네 여기까지만 해야지 현재시각 오전 5시 31분 히히 
+-- 2410101 학생이 product_id=1 (우산 1번) 대여
+INSERT INTO Rentals (student_id, product_id, rental_status)
+VALUES ('2410101', 1, 1);
