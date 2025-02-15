@@ -6,6 +6,7 @@ import Borrow from "../pages/Borrow/Borrow";
 import MyPage from "../pages/MyPage/MyPage";
 import Info from "../pages/MyPage/ChangeInfo";
 import UserManage from "../pages/UserManage/UserManage";
+import Login from "../pages/Login/Login";
 
 // 2. Router 라는 함수를 만들고 아래와 같이 작성합니다.
 //BrowserRouter를 Router로 감싸는 이유는,
@@ -19,6 +20,7 @@ const Router = () => {
         <Route path="/MyPage" element={<MyPage />} />
         <Route path="/Info" element={<Info />} />
         <Route path="/UserManage" element={<UserManage />} />
+        <Route path="/Login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );
