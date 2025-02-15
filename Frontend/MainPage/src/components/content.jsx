@@ -1,22 +1,47 @@
 import "./content.css";
 import { Link } from "react-router-dom";
 
-const Content = () => {
-  var items = 0;
-  return (
-    <>
-      <div className="Content">
-        <div className="c">
-          <h2>📆 오늘의 날짜: {new Date().toLocaleDateString()}</h2>
-          <h3>여러분의 편의를 위해 노력하겠습니다.😊</h3>
-          <div className="line"></div>
-          <h3>대여현황: {items}</h3>{" "}
-          {/*없음에 {}추가하고 대여 현황 상태 해놓기*/}
-          <Link to={"/Borrow"}>
+const Content = (props) => {
+  var items = props.item;
+  var ID = props.id;
+  function IsIDManager() {
+    if (ID === "Manage") {
+      return (
+        <>
+          <Link to={"/Borrow"} state={{ ID }}>
+            <div className="Dayeo">🎒양심 물품 관리하기</div>
+          </Link>
+          <br />
+          <Link to={"/UserManage"} state={{ ID }}>
+            <div className="Dayeo">🎒사용자 관리하기</div>
+          </Link>
+          <div className="text">
+            <h5>
+              ※관리자들께선 <span>2일안에</span> 제출하지 않은 학생들을 잘
+              관리해주세요.
+              <br />
+              <br />※<span>양심 물품 관리하기는</span> 양심 물품을 추가 및
+              삭제를 하실 수 있습니다. <span>사용자 관리하기는</span> 학생들의
+              대여 상황을 관리할 수 있습니다.
+              <br />
+              <br />
+              ※그 밖에 오류 관련 문의 사항은 <span>AI융합부에게</span>{" "}
+              문의하십시오.
+            </h5>
+          </div>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <div>
+            <h3>대여현황: {items["우산"]}</h3>
+          </div>
+          <Link to={"/Borrow"} state={{ ID }}>
             <div className="Dayeo">🎒양심 물품 대여하기</div>
           </Link>
           <div className="text">
-            <h4>
+            <h5>
               ※빌린 양심 물품은 반납일을 기준으로 <span>2일안에</span> 제출하지
               않을 시 불이익이 있습니다.
               <br />
@@ -25,8 +50,20 @@ const Content = () => {
               <br />
               <br />
               ※그 밖에 문의 사항은 <span>학생회에</span> 문의하십시오.
-            </h4>
+            </h5>
           </div>
+        </>
+      );
+    }
+  }
+  return (
+    <>
+      <div className="Content">
+        <div className="c">
+          <h2>📆 오늘의 날짜: {new Date().toLocaleDateString()}</h2>
+          <h3>여러분의 편의를 위해 노력하겠습니다.😊</h3>
+          <div className="line"></div>
+          {IsIDManager()}
         </div>
       </div>
     </>

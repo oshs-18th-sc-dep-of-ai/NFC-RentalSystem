@@ -1,15 +1,15 @@
-import "./Borrow.css";
+import "./UserManage.css";
 import React, { useState } from "react";
-import Header from "../../components/B_header";
-import Content from "../../components/B_content";
+import Header from "../../components/UM_header";
+import Content from "../../components/UM_content";
 import { useLocation } from "react-router-dom";
 
-function Borrow() {
+function UserManage() {
   const location = useLocation();
   const id = location.state.ID;
   return (
     <>
-      <div className="Borrow">
+      <div className="UserManage">
         <Header />
         <Content Id={id} />
       </div>
@@ -17,4 +17,4 @@ function Borrow() {
   );
 }
 
-export default Borrow;
+export default UserManage;

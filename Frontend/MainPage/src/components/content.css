@@ -29,6 +29,10 @@ a {
   color: gray;
 }
 
+.text h5 {
+  font-size: 14px;
+}
+
 span {
   font-weight: bolder;
   color: rgb(96, 96, 96);

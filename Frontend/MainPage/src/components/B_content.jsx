@@ -1,7 +1,20 @@
 import React, { useState } from "react";
 import "./B_content.css";
+import { useLocation } from "react-router-dom";
 
 const Content = () => {
+  const location = useLocation();
+  const ID = location.state.ID;
+  function IsIDManager() {
+    if (ID === "Manage") {
+      return <div>Hello {ID}</div>;
+    } else {
+      return <div>{ID}</div>;
+    }
+  }
+  {
+    console.log(ID);
+  }
   const [selectedItem, setSelectedItem] = useState(null);
   const [items] = useState({
     umbrella: 30, // 우산 개수
@@ -36,6 +49,7 @@ const Content = () => {
   return (
     <div className="container">
       <h1 className="title">물품 대여 시스템</h1>
+      <div>{IsIDManager()}</div>
       <div className="item-selection">
         <label className="radio-label">
           <input
