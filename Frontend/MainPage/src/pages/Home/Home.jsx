@@ -6,14 +6,14 @@ import { Navigate } from "react-router-dom";
 import { useState } from "react";
 
 function Home(props) {
-  const ID = "Manage";
-  const ITEM = { 우산: 30, 보조배터리: 10 };
+  const ID = "Manage"; // 유저아이디
+  const ITEM = { 우산: 30, 보조배터리: 10 }; // 아이템
 
-  const [isLogined, setIsLogined] = useState(false);
+  /*const [isLogined, setIsLogined] = useState(false);
 
   if (!isLogined) {
     return <Navigate to="/Login" />;
-  }
+  }*/
 
   return (
     <div className="Home">

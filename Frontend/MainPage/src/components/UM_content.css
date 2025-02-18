@@ -25,14 +25,15 @@
   background-color: #3493ff;
   color: white;
   border-radius: 10px;
-  height: 60px;
+  height: 90px;
   padding: 20px;
   text-align: left;
   min-width: 200px;
+  font-weight: bold;
 }
 
 .UMcontent .container .block.highlight {
-  background-color: red;
+  background-color: rgb(255, 123, 0);
 }
 
 a {

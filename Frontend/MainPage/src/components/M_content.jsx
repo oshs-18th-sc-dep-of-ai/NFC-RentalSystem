@@ -2,7 +2,7 @@ import "./M_content.css";
 import { Link } from "react-router-dom";
 
 const Mcontent = (item) => {
-  const ID = "20919 이가연";
+  const ID = "2420919";
   const PW = "20919";
   var items = item;
   return (
