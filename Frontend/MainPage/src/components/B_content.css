@@ -77,3 +77,12 @@
   font-size: 1rem;
   margin: 5px 0;
 }
+
+.line {
+  border-top: 2px solid rgb(223, 223, 223);
+}
+
+.add-item-section h2 {
+  display: flex;
+  align-items: left;
+}

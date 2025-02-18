@@ -47,8 +47,11 @@ const Content = (props) => {
     return [2025, newM, newD]; //연도 변수
   }
 
-  const rentalData = [
-    // 대여한 사람 정보
+  const DeleteUser = (id) => {
+    setRentalData(rentalData.filter((rental) => rental.id !== id));
+  };
+
+  const [rentalData, setRentalData] = useState([
     {
       id: "20919",
       name: "이가연",
@@ -89,12 +92,13 @@ const Content = (props) => {
       date: [2025, 2, 13],
       deadline: calculateDeadline(2, 13),
     },
-  ];
+  ]);
 
   rentalData.sort((a, b) => {
+    //연체된 애들 위로 올리기
     const overdueA = day[1] > a.deadline[1] || day[2] > a.deadline[2];
     const overdueB = day[1] > b.deadline[1] || day[2] > b.deadline[2];
-    const diffA = Math.abs(day[2] - a.deadline[2]);
+    const diffA = Math.abs(day[2] - a.deadline[2]); //별건 아니고 그 연체일 절댓값...
     const diffB = Math.abs(day[2] - b.deadline[2]);
 
     if (overdueA && !overdueB) return -1;
@@ -105,7 +109,7 @@ const Content = (props) => {
   return (
     <div className="UMcontent">
       <div className="c">
-        <h2>📆 오늘의 날짜: {new Date().toLocaleDateString()}</h2>
+        <h2>📆 오늘의 날짜: {day.join(". ")}</h2>
         <h2>대여현황</h2>
         <div className="line"></div>
         <div
@@ -116,12 +120,12 @@ const Content = (props) => {
           onMouseUp={handleMouseLeaveOrUp}
           onMouseMove={handleMouseMove} // 드래그 기능
         >
-          {rentalData.map((rental, index) => {
+          {rentalData.map((rental) => {
             const isOverdue =
-              day[1] > rental.deadline[1] || day[2] > rental.deadline[2];
+              day[1] > rental.deadline[1] || day[2] > rental.deadline[2]; //연체된 애들 중 오래된 순으로 정렬
             return (
               <div
-                key={index}
+                key={rental.id}
                 className={`block ${isOverdue ? "highlight" : ""}`}
               >
                 ID: {rental.id} {rental.name}
@@ -135,6 +139,13 @@ const Content = (props) => {
                 <br />
                 반납일: {rental.deadline.join(".")} (
                 {-(day[2] - rental.deadline[2])})
+                <button
+                  className={`DeleteButton ${isOverdue ? "highlight" : ""}`}
+                  onClick={() => DeleteUser(rental.id)}
+                >
+                  반납
+                </button>
+                {/*강제 반납처리*/}
               </div>
             );
           })}

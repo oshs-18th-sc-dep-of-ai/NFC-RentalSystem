@@ -7,7 +7,6 @@ import { useState } from "react";
 
 function Home(props) {
   const ID = "Manage"; // 유저아이디
-  const ITEM = { 우산: 30, 보조배터리: 10 }; // 아이템
 
   /*const [isLogined, setIsLogined] = useState(false);
 
@@ -18,7 +17,7 @@ function Home(props) {
   return (
     <div className="Home">
       <Header />
-      <Content id={ID} item={ITEM} />
+      <Content id={ID} />
       <Footer />
     </div>
   );

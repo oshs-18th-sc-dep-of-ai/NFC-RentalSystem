@@ -2,7 +2,6 @@ import "./content.css";
 import { Link } from "react-router-dom";
 
 const Content = (props) => {
-  var items = props.item;
   var ID = props.id;
   function IsIDManager() {
     if (ID === "Manage") {
@@ -35,7 +34,7 @@ const Content = (props) => {
       return (
         <>
           <div>
-            <h3>대여현황: {items["우산"]}</h3>
+            <h3>대여현황: {0}</h3>
           </div>
           <Link to={"/Borrow"} state={{ ID }}>
             <div className="Dayeo">🎒양심 물품 대여하기</div>
