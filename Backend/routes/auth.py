@@ -2,7 +2,7 @@
 # 로그아웃 시 session.pop()으로 세션 삭제하여 상태 유지 관리
 
 from flask import Blueprint, request, jsonify, session
-from app import mysql 
+from extensions import mysql 
 
 # 블루프린트
 auth_bp = Blueprint('auth', __name__)
