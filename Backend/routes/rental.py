@@ -2,7 +2,7 @@
 # 대여 가능한지 확인 후 가능하면 DB에 저장하고 상태 변경
 
 from flask import Blueprint, request, jsonify, session
-from app import mysql
+from extensions import mysql
 
 # 블루프린트 
 rental_bp = Blueprint('rental', __name__)
