@@ -2,22 +2,22 @@ import "./Home.css";
 import Header from "../../components/header";
 import Content from "../../components/content";
 import Footer from "../../components/footer";
-import { Navigate } from "react-router-dom";
 import { useState } from "react";
+import { useLocation, Navigate } from "react-router-dom";
 
 function Home(props) {
-  const ID = "Manage"; // 유저아이디
-
-  /*const [isLogined, setIsLogined] = useState(false);
+  const location = useLocation();
+  const user = location.state; // 로그인 시 전달된 id, pw 정보
+  const [isLogined, setIsLogined] = useState(user ? true : false);
 
   if (!isLogined) {
     return <Navigate to="/Login" />;
-  }*/
+  }
 
   return (
     <div className="Home">
       <Header />
-      <Content id={ID} />
+      <Content id={user?.id} />
       <Footer />
     </div>
   );
