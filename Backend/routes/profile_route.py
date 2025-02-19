@@ -1,7 +1,7 @@
 # React에서 /profile API를 호출->  학생 정보 + 대여 목록 확인 가능!
 
 from flask import Blueprint, jsonify, session
-from app import mysql
+from extensions import mysql
 
 # 블루프린트 
 profile_bp = Blueprint('profile', __name__)
@@ -37,7 +37,7 @@ def profile():
             "product_name": rental[0],
             "rental_time": rental[1].strftime('%Y-%m-%d %H:%M:%S') if rental[1] else None,
             "return_time": rental[2].strftime('%Y-%m-%d %H:%M:%S') if rental[2] else None,
-            "status": "대여 중" if rental[3] == 1 else "반납 완료",
+            "status": "대여 중" if rental[3] == 1 else "반납 대기 중" if rental[3] == 2 else "반납 완료", 
             "rental_id": rental[4],
         }
         for rental in rentals
