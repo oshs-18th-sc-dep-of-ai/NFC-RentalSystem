@@ -1,6 +1,6 @@
 // Login.js
-import React from 'react';
-import './styles.css'; // 기존 CSS 파일을 가져옵니다.
+import React from "react";
+import "./styles.css"; // 기존 CSS 파일을 가져옵니다.
 
 function Login() {
   return (
@@ -15,7 +15,6 @@ function Login() {
           placeholder="7자리 숫자"
           required
         />
-
         <label htmlFor="password">비밀번호:</label>
         <input
           type="password"
@@ -29,10 +28,9 @@ function Login() {
       </form>
       <p info="info-text">기본 비밀번호는 마이페이지에서 변경할 수 있어요!</p>
       <div className="logo-container">
-    <img src="/images/os.png" alt="오성고 로고" />
-    <img src="/images/os_18_sc.png" alt="천안오성고 로고" />
-</div>
-
+        <img src="/images/os.png" alt="오성고 로고" />
+        <img src="/images/os_18_sc.png" alt="천안오성고 로고" />
+      </div>
     </div>
   );
 }

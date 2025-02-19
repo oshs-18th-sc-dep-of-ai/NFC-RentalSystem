@@ -14,7 +14,7 @@ const Mcontent = (item) => {
             <h2>프로필</h2>
             <h3>아이디 : {ID}</h3>
             <h3>비밀번호 : {PW}</h3>
-            <Link to={"/Info"}>
+            <Link to={"/Info"} state={{ ID, PW}}>
               <img className="icon" alt="변경" src="icon1.png"></img>
             </Link>
             <div className="line"></div>
