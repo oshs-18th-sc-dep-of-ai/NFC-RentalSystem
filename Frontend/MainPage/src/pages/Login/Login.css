@@ -64,6 +64,16 @@
   font-size: 1rem;
 }
 
+.studentId {
+  display: flex;
+  align-items: left;
+}
+
+.password {
+  display: flex;
+  align-items: left;
+}
+
 .Login input {
   margin-bottom: 20px;
   padding: 15px;
