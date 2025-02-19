@@ -86,3 +86,40 @@
   display: flex;
   align-items: left;
 }
+
+.add-item-section input {
+  width: 98%;
+  height: 30px;
+  margin-bottom: 20px;
+}
+
+.add-item-section h4 {
+  display: flex;
+  margin: 0;
+}
+
+.addButton {
+  margin: 10px;
+  align-items: center;
+}
+.item-list {
+  background-color: #ccc;
+  padding: 10px;
+}
+
+.item-list h2 {
+  margin-top: 0;
+  display: flex;
+  align-items: left;
+}
+
+.itemsAssemble {
+  display: flex;
+  gap: 30px;
+  justify-content: left;
+  flex-wrap: wrap;
+}
+
+.item-container button {
+  margin-left: 15px;
+}

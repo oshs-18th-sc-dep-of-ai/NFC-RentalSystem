@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./B_content.css";
 import { useLocation } from "react-router-dom";
 
-//gpt...
+//gpt...그는 신이야....
 
 const Content = () => {
   const location = useLocation();
@@ -86,26 +86,39 @@ const Content = () => {
     <div>
       <div className="container">
         <h1 className="title">물품 대여 시스템</h1>
-        <div className="line"></div>
         {/* 물품 추가 입력 폼 */}
         {ID === "Manage" && (
           <div className="add-item-section">
+            <div className="line"></div>
             <h2>물품 추가</h2>
-            <input
-              type="text"
-              placeholder="물품 이름"
-              value={newItem.name}
-              onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
-            />
-            <input
-              type="number"
-              placeholder="물품 개수"
-              value={newItem.count}
-              onChange={(e) =>
-                setNewItem({ ...newItem, count: parseInt(e.target.value) })
-              }
-            />
-            <button onClick={handleAddItem}>추가</button>
+            <div>
+              <h4>물품 이름</h4>
+              <input
+                className="item-add-name"
+                type="text"
+                placeholder="물품 이름"
+                value={newItem.name}
+                onChange={(e) =>
+                  setNewItem({ ...newItem, name: e.target.value })
+                }
+              />
+            </div>
+            <div>
+              <h4>물품 개수</h4>
+              <input
+                className="item-add-count"
+                type="number"
+                placeholder="물품 개수"
+                value={newItem.count}
+                onChange={(e) =>
+                  setNewItem({ ...newItem, count: parseInt(e.target.value) })
+                }
+              />
+            </div>
+
+            <button className="addButton" onClick={handleAddItem}>
+              추가
+            </button>
           </div>
         )}
 
@@ -113,34 +126,39 @@ const Content = () => {
         {ID === "Manage" && (
           <div className="item-list">
             <h2>물품 목록</h2>
+            <div className="itemsAssemble">
+              {Object.keys(items).map((item) => (
+                <div key={item} className="item-container">
+                  <span>
+                    {item} ({items[item]})
+                  </span>
+                  <button onClick={() => handleDeleteItem(item)}>삭제</button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* 물품 선택 UI (관리자는 볼 수 없음) */}
+        {ID !== "Manage" && (
+          <div className="item-selection">
             {Object.keys(items).map((item) => (
-              <div key={item} className="item-container">
-                <span>
-                  {item} ({items[item]})
-                </span>
-                <button onClick={() => handleDeleteItem(item)}>삭제</button>
-              </div>
+              <label key={item} className="radio-label">
+                <input
+                  type="radio"
+                  name="item"
+                  value={item}
+                  checked={selectedItem === item}
+                  onChange={() => handleItemSelect(item)}
+                />
+                {item} ({items[item]})
+              </label>
             ))}
           </div>
         )}
 
-        {/* 물품 선택 UI */}
-        <div className="item-selection">
-          {Object.keys(items).map((item) => (
-            <label key={item} className="radio-label">
-              <input
-                type="radio"
-                name="item"
-                value={item}
-                checked={selectedItem === item}
-                onChange={() => handleItemSelect(item)}
-              />
-              {item} ({items[item]})
-            </label>
-          ))}
-        </div>
-
-        {selectedItem && (
+        {/* 대여 시스템 (관리자는 볼 수 없음) */}
+        {ID !== "Manage" && selectedItem && (
           <div className="rental-section">
             <h2 className="subtitle">대여할 {selectedItem} 선택</h2>
             <div className="checkbox-grid">
