@@ -1,7 +1,7 @@
 #  React에서 로그인 후 세션을 유지할 수 있도록 session에 저장
 # 로그아웃 시 session.pop()으로 세션 삭제하여 상태 유지 관리
 
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify, session, url_for
 from extensions import mysql 
 
 # 블루프린트
@@ -24,7 +24,7 @@ def login():
         # 로그인 성공 시 세션 저장 (React에서 세션 유지 됨됨)
         session['session_student_id'] = student[0]
         session['session_student_name'] = student[1]
-        return jsonify({"message": "로그인 성공!", "status": "success", "student_id": student[0], "student_name": student[1]}), 200
+        return jsonify({"message": "로그인 성공!", "status": "success", "student_id": student[0], "student_name": student[1], "redirect_url": url_for('profile.profile', _external=True)}), 200
     else:
         return jsonify({"message": "잘못된 ID 또는 비밀번호입니다.", "status": "error"}), 401
 
@@ -33,4 +33,4 @@ def login():
 def logout():
     session.pop('session_student_id', None)
     session.pop('session_student_name', None)
-    return jsonify({"message": "로그아웃 되었습니다.", "status": "success"}), 200
+    return jsonify({"message": "로그아웃 되었습니다.", "status": "success", "redirect_url": url_for('outh.login', _external=True)}), 200

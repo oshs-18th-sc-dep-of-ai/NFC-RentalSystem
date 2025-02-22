@@ -1,7 +1,7 @@
 # React에서 물품을 대여할 때, API 호출하면 해당 제품을 대여 가능
 # 대여 가능한지 확인 후 가능하면 DB에 저장하고 상태 변경
 
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify, session, url_for
 from extensions import mysql
 
 # 블루프린트 
@@ -11,7 +11,7 @@ rental_bp = Blueprint('rental', __name__)
 @rental_bp.route('/rent_product/<int:product_id>', methods=['POST'])
 def rent_product(product_id):
     if 'session_student_id' not in session:
-        return jsonify({"message": "로그인이 필요합니다.", "status": "error"}), 401
+        return jsonify({"message": "로그인이 필요합니다.", "status": "error", "redirect_url": url_for('outh.login', _external=True)}), 401
 
     cursor = mysql.connection.cursor()
 
@@ -33,4 +33,4 @@ def rent_product(product_id):
     mysql.connection.commit()
     cursor.close()
 
-    return jsonify({"message": "대여가 완료되었습니다!", "status": "success"}), 200
+    return jsonify({"message": "대여가 완료되었습니다!", "status": "success", "redirect_url": url_for('profile.profile', _external=True)}), 200

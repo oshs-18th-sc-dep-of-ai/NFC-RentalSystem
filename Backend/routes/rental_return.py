@@ -1,7 +1,7 @@
 # React에서 /rental_request_return/:id를 호출하면 해당 제품의 반납 요청 (반납 대기 상태로 변경)
 # 관리자가 /admin/approve_return/:id를 호출하면 최종 반납 승인 (반납 완료 상태로 변경)
 
-from flask import Blueprint, jsonify, session
+from flask import Blueprint, jsonify, session, url_for
 from extensions import mysql
 
 # 블루프린트
@@ -11,7 +11,8 @@ return_bp = Blueprint('rental_return', __name__)
 @return_bp.route('/rental_request_return/<int:id>', methods=['POST'])
 def request_rental_return(id):
     if 'session_student_id' not in session:
-        return jsonify({"message": "로그인이 필요합니다.", "status": "error"}), 401
+        app.register_blueprint(auth_bp, url_prefix='/auth')
+        return jsonify({"message": "로그인이 필요합니다.", "status": "error", "redirect_url": url_for('outh.login', _external=True)}), 401
 
     cursor = mysql.connection.cursor()
     cursor.execute("""
@@ -26,7 +27,7 @@ def request_rental_return(id):
 @return_bp.route('/admin/approve_return/<int:id>', methods=['POST'])
 def approve_rental_return(id):
     if 'admin_id' not in session:
-        return jsonify({"message": "관리자 권한이 필요합니다.", "status": "error"}), 403
+        return jsonify({"message": "관리자 권한이 필요합니다.", "status": "error", "redirect_url": url_for('admin.login', _external=True)}), 403
 
     cursor = mysql.connection.cursor()
     cursor.execute("""

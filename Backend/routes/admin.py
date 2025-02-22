@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request, session
+from flask import Blueprint, jsonify, request, session, url_for
 from extensions import mysql  
 
 # 블루프린트
@@ -19,7 +19,7 @@ def admin_login():
         session['admin_id'] = admin_id  
         return jsonify({"message": "관리자 로그인 성공!", "status": "success"}), 200
     else:
-        return jsonify({"message": "관리자 계정 정보가 틀렸습니다.", "status": "error"}), 401
+        return jsonify({"message": "관리자 계정 정보가 틀렸습니다.", "status": "error", "redirect_url": url_for('admin.login', _external=True)}), 401
 
 # 관리자 로그아웃
 @admin_bp.route('/admin/logout', methods=['POST'])
@@ -31,7 +31,7 @@ def admin_logout():
 @admin_bp.route('/admin/add_product', methods=['POST'])
 def add_product():
     if 'admin_id' not in session:
-        return jsonify({"message": "관리자 권한이 필요합니다.", "status": "error"}), 403
+        return jsonify({"message": "관리자 권한이 필요합니다.", "status": "error", "redirect_url": url_for('admin.login', _external=True)}), 403
 
     data = request.get_json()
     product_name = data.get('product_name')
@@ -65,7 +65,7 @@ def add_product():
 @admin_bp.route('/admin/delete_product/<int:product_id>', methods=['DELETE'])
 def delete_product(product_id):
     if 'admin_id' not in session:  
-        return jsonify({"message": "관리자 권한이 필요합니다.", "status": "error"}), 403
+        return jsonify({"message": "관리자 권한이 필요합니다.", "status": "error", "redirect_url": url_for('admin.login', _external=True)}), 403
 
     cursor = mysql.connection.cursor()
 
@@ -86,7 +86,7 @@ def delete_product(product_id):
 @admin_bp.route('/admin/approve_return/<int:rental_id>', methods=['POST'])
 def approve_rental_return(rental_id):
     if 'admin_id' not in session:
-        return jsonify({"message": "관리자 권한이 필요합니다.", "status": "error"}), 403
+        return jsonify({"message": "관리자 권한이 필요합니다.", "status": "error", "redirect_url": url_for('admin.login', _external=True)}), 403
 
     cursor = mysql.connection.cursor()
     cursor.execute("""

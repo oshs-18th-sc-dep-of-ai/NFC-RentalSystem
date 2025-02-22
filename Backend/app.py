@@ -19,7 +19,7 @@ Session(app)
 
 #  MySQL 설정
 app.config['MYSQL_HOST'] = 'localhost' # 여기 실제주소로변경하기!
-app.config['MYSQL_USER'] = 'root' # 사용자 이름도 변경경
+app.config['MYSQL_USER'] = 'root' # 사용자 이름도 변경
 app.config['MYSQL_PASSWORD'] = 'PWcaoshs#osai1818!'
 app.config['MYSQL_DB'] = 'student24_db'
 app.config['MYSQL_CHARSET'] = 'utf8mb4'

@@ -1,6 +1,6 @@
 # React에서 /profile API를 호출->  학생 정보 + 대여 목록 확인 가능!
 
-from flask import Blueprint, jsonify, session
+from flask import Blueprint, jsonify, session, url_for
 from extensions import mysql
 
 # 블루프린트 
@@ -10,7 +10,7 @@ profile_bp = Blueprint('profile', __name__)
 @profile_bp.route('/profile', methods=['GET'])
 def profile():
     if 'session_student_id' not in session:
-        return jsonify({"message": "로그인이 필요합니다.", "status": "error"}), 401
+        return jsonify({"message": "로그인이 필요합니다.", "status": "error", "redirect_url": url_for('outh.login', _external=True)}), 401
 
     cursor = mysql.connection.cursor()
 
