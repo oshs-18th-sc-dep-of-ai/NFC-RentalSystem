@@ -11,7 +11,7 @@ rental_bp = Blueprint('rental', __name__)
 @rental_bp.route('/rent_product/<int:product_id>', methods=['POST'])
 def rent_product(product_id):
     if 'session_student_id' not in session:
-        return jsonify({"message": "로그인이 필요합니다.", "status": "error", "redirect_url": url_for('outh.login', _external=True)}), 401
+        return jsonify({"message": "로그인이 필요합니다.", "status": "error", "redirect_url": url_for('outh.login', _external=True)}), 401 # 리다이렉트 추가
 
     cursor = mysql.connection.cursor()
 
@@ -33,4 +33,4 @@ def rent_product(product_id):
     mysql.connection.commit()
     cursor.close()
 
-    return jsonify({"message": "대여가 완료되었습니다!", "status": "success", "redirect_url": url_for('profile.profile', _external=True)}), 200
+    return jsonify({"message": "대여가 완료되었습니다!", "status": "success", "redirect_url": url_for('profile.profile', _external=True)}), 200 # 리다이렉트 추가

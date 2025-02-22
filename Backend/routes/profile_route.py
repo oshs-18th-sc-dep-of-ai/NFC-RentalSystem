@@ -10,7 +10,7 @@ profile_bp = Blueprint('profile', __name__)
 @profile_bp.route('/profile', methods=['GET'])
 def profile():
     if 'session_student_id' not in session:
-        return jsonify({"message": "로그인이 필요합니다.", "status": "error", "redirect_url": url_for('outh.login', _external=True)}), 401
+        return jsonify({"message": "로그인이 필요합니다.", "status": "error", "redirect_url": url_for('outh.login', _external=True)}), 401 # 리다이렉트 추가
 
     cursor = mysql.connection.cursor()
 

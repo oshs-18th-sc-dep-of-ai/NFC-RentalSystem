@@ -12,7 +12,7 @@ return_bp = Blueprint('rental_return', __name__)
 def request_rental_return(id):
     if 'session_student_id' not in session:
         app.register_blueprint(auth_bp, url_prefix='/auth')
-        return jsonify({"message": "로그인이 필요합니다.", "status": "error", "redirect_url": url_for('outh.login', _external=True)}), 401
+        return jsonify({"message": "로그인이 필요합니다.", "status": "error", "redirect_url": url_for('outh.login', _external=True)}), 401 # 리다이렉트 추가
 
     cursor = mysql.connection.cursor()
     cursor.execute("""
@@ -27,7 +27,7 @@ def request_rental_return(id):
 @return_bp.route('/admin/approve_return/<int:id>', methods=['POST'])
 def approve_rental_return(id):
     if 'admin_id' not in session:
-        return jsonify({"message": "관리자 권한이 필요합니다.", "status": "error", "redirect_url": url_for('admin.login', _external=True)}), 403
+        return jsonify({"message": "관리자 권한이 필요합니다.", "status": "error", "redirect_url": url_for('admin.login', _external=True)}), 403 # 리다이렉트 추가
 
     cursor = mysql.connection.cursor()
     cursor.execute("""

@@ -24,7 +24,7 @@ def login():
         # 로그인 성공 시 세션 저장 (React에서 세션 유지 됨됨)
         session['session_student_id'] = student[0]
         session['session_student_name'] = student[1]
-        return jsonify({"message": "로그인 성공!", "status": "success", "student_id": student[0], "student_name": student[1], "redirect_url": url_for('profile.profile', _external=True)}), 200
+        return jsonify({"message": "로그인 성공!", "status": "success", "student_id": student[0], "student_name": student[1], "redirect_url": url_for('profile.profile', _external=True)}), 200 # 리다이렉트 추가
     else:
         return jsonify({"message": "잘못된 ID 또는 비밀번호입니다.", "status": "error"}), 401
 
@@ -33,4 +33,4 @@ def login():
 def logout():
     session.pop('session_student_id', None)
     session.pop('session_student_name', None)
-    return jsonify({"message": "로그아웃 되었습니다.", "status": "success", "redirect_url": url_for('outh.login', _external=True)}), 200
+    return jsonify({"message": "로그아웃 되었습니다.", "status": "success", "redirect_url": url_for('outh.login', _external=True)}), 200 # 리다이렉트 추가
