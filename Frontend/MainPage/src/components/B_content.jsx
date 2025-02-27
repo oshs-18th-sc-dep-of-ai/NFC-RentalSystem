@@ -2,28 +2,32 @@ import React, { useState } from "react";
 import "./B_content.css";
 import { useLocation } from "react-router-dom";
 
-//gpt...그는 신이야....
+//gpt에게 압도적 감사를 표합니다...
 
 const Content = () => {
   const location = useLocation();
   const ID = location.state.ID;
 
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [newItem, setNewItem] = useState({ name: "", count: 0 });
+  const [selectedItem, setSelectedItem] = useState(null); //선택된 아이템들 담아두는 곳
+  const [newItem, setNewItem] = useState({ name: "", count: 0 }); //관리자 아이템 추가한 거
   const [items, setItems] = useState({
+    //물품들
     우산: 30,
     보조배터리: 20,
   });
   const [rented, setRented] = useState({
+    //대여된 물품 분류용
     우산: { total: 30, rented: [] },
     보조배터리: { total: 20, rented: [] },
   });
 
   const [toRent, setToRent] = useState([]);
+  const [toReturn, setToReturn] = useState([]); // 반납할 물품 추가
 
   const handleItemSelect = (item) => {
     setSelectedItem(item);
     setToRent([]);
+    setToReturn([]); // 물품 선택 시 반납 선택도 초기화
   };
 
   const handleCheckboxChange = (index) => {
@@ -32,8 +36,15 @@ const Content = () => {
     );
   };
 
+  const handleReturnCheckboxChange = (index) => {
+    setToReturn((prev) =>
+      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
+    );
+  };
+
   const handleRent = () => {
     if (window.confirm("정말 대여하시겠습니까?")) {
+      // 대여할꺼야아아아앙
       setRented((prev) => ({
         ...prev,
         [selectedItem]: {
@@ -44,6 +55,21 @@ const Content = () => {
         },
       }));
       setToRent([]);
+    }
+  };
+
+  const handleReturn = () => {
+    if (window.confirm("정말 반납하시겠습니까?")) {
+      setRented((prev) => ({
+        ...prev,
+        [selectedItem]: {
+          total: prev[selectedItem].total,
+          rented: prev[selectedItem].rented.filter(
+            (item) => !toReturn.includes(item)
+          ),
+        },
+      }));
+      setToReturn([]);
     }
   };
 
@@ -86,6 +112,7 @@ const Content = () => {
     <div>
       <div className="container">
         <h1 className="title">물품 대여 시스템</h1>
+
         {/* 물품 추가 입력 폼 */}
         {ID === "Manage" && (
           <div className="add-item-section">
@@ -157,7 +184,7 @@ const Content = () => {
           </div>
         )}
 
-        {/* 대여 시스템 (관리자는 볼 수 없음) */}
+        {/* 대여 시스템 */}
         {ID !== "Manage" && selectedItem && (
           <div className="rental-section">
             <h2 className="subtitle">대여할 {selectedItem} 선택</h2>
@@ -181,20 +208,50 @@ const Content = () => {
             >
               대여
             </button>
-            <div className="rented-list">
-              <h3 className="subtitle">대여된 물품</h3>
-              {Object.keys(rented).map((item) => (
-                <p key={item}>
-                  {item}:{" "}
-                  {rented[item].rented
-                    .sort((a, b) => a - b)
-                    .map((num) => num + 1)
-                    .join(", ") || "없음"}
-                </p>
-              ))}
-            </div>
           </div>
         )}
+
+        {/* 반납 시스템 */}
+        {ID !== "Manage" &&
+          selectedItem &&
+          rented[selectedItem].rented.length > 0 && (
+            <div className="return-section">
+              <h2 className="subtitle">반납할 {selectedItem} 선택</h2>
+              <div className="checkbox-grid">
+                {rented[selectedItem].rented.map((index) => (
+                  <div key={index} className="checkbox-container">
+                    <input
+                      type="checkbox"
+                      checked={toReturn.includes(index)}
+                      onChange={() => handleReturnCheckboxChange(index)}
+                    />
+                    <div className="checkbox-label">{index + 1}</div>
+                  </div>
+                ))}
+              </div>
+              <button
+                className="return-button"
+                onClick={handleReturn}
+                disabled={toReturn.length === 0}
+              >
+                반납
+              </button>
+            </div>
+          )}
+
+        {/* 대여된 물품 목록 */}
+        <div className="rented-list">
+          <h3 className="subtitle">대여된 물품</h3>
+          {Object.keys(rented).map((item) => (
+            <p key={item}>
+              {item}:{" "}
+              {rented[item].rented
+                .sort((a, b) => a - b)
+                .map((num) => num + 1)
+                .join(", ") || "없음"}
+            </p>
+          ))}
+        </div>
       </div>
     </div>
   );

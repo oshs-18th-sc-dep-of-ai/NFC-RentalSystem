@@ -65,6 +65,26 @@
   background-color: #0056b3;
 }
 
+.return-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.return-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.return-button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
 .rented-list {
   margin-top: 15px;
   padding: 10px;
@@ -122,4 +142,28 @@
 
 .item-container button {
   margin-left: 15px;
+}
+
+.mode-selection {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.mode-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  background-color: white;
+  cursor: pointer;
+}
+
+.mode-button:hover {
+  background-color: #f0f0f0;
+}
+
+.return-button:disabled,
+.rent-button:disabled {
+  background-color: gray;
+  cursor: not-allowed;
 }
