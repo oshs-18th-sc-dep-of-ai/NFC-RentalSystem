@@ -1,0 +1,17 @@
+CREATE DATABASE IF NOT EXISTS student24_db;
+USE student24_db;
+
+--  물품 테이블 (Products)
+CREATE TABLE IF NOT EXISTS Products (
+    product_id INT AUTO_INCREMENT PRIMARY KEY, 
+    product_name VARCHAR(255) NOT NULL,
+    category VARCHAR(100) NOT NULL,
+    quantity INT NOT NULL DEFAULT 0,  --  
+    available BOOLEAN DEFAULT TRUE,  -- 
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 우산 30개, 보조배터리 20개 
+INSERT INTO Products (product_name, category, quantity) VALUES
+('우산', '우산', 30), 
+('보조배터리', '보조배터리', 20);
