@@ -1,0 +1,15 @@
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #3493ff;
+  color: rgb(255, 255, 255);
+  padding-left: 10px;
+}
+
+.footer-links {
+  text-align: left;
+  display: flex;
+  gap: 5px;
+}

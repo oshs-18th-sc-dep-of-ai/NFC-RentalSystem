@@ -1,0 +1,52 @@
+
+.change-info-container {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 30px;
+  margin: 40px auto;
+  max-width: 400px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.change-info-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.change-info-container label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.change-info-container input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+
+.change-info-container button {
+  width: 100%;
+  background: #007bff;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.change-info-container button:hover {
+  background: #0056b3;
+}
+
+.change-info-page {
+  background-color: #f1f1f1; /* 여기에 원하는 색상 입력! */
+  min-height: 100vh;
+}

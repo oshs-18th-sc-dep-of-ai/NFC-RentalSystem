@@ -1,0 +1,88 @@
+.UMcontent {
+  justify-content: center;
+  padding: 0;
+  width: 100%;
+  margin: 0;
+}
+
+.UMcontent .container {
+  margin-top: 50px;
+  height: 400px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  white-space: nowrap;
+  gap: 10px;
+  padding: 10px;
+  cursor: grab;
+}
+
+.UMcontent .container:active {
+  cursor: grabbing;
+}
+
+.UMcontent .container .block {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+  background-color: #3493ff;
+  color: white;
+  border-radius: 10px;
+  height: 90px;
+  padding: 20px;
+  text-align: left;
+  min-width: 200px;
+  font-weight: bold;
+}
+
+.UMcontent .container .block.warn {
+  background-color: rgb(202, 116, 255);
+}
+
+.UMcontent .container .block .DeleteButton {
+  background-color: #426eff;
+  border: 0;
+  border-radius: 5px;
+  font-weight: bold;
+  color: white;
+  height: 40px;
+  width: 50px;
+  font-size: 18px;
+}
+
+.UMcontent .container .block .DeleteButton.warn {
+  background-color: #8d5dff;
+}
+
+a {
+  display: flex;
+}
+
+.c {
+  margin: 8px;
+}
+
+.line {
+  border-top: 2px solid rgb(223, 223, 223);
+  margin-bottom: 10px;
+}
+
+.UMcontent .container .block.highlight {
+  background-color: orange;
+}
+
+.UMcontent .container .block .DeleteButton.highlight {
+  background-color: orangered;
+}
+
+.UMcontent span {
+  color: white;
+}
+.orange {
+  background-color: orange;
+}
+.purple {
+  background-color: #8d5dff;
+}
+.blue {
+  background-color: #426eff;
+}

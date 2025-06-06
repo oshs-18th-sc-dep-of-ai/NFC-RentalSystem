@@ -1,0 +1,35 @@
+/* MyPage.css */
+
+.profile-card {
+  background-color: #2196F3; /* 파란색 */
+  color: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 15px 0;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.change-password-btn {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: white;
+  color: #2196F3;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.change-password-btn:hover {
+  background-color: #1976D2;
+  color: white;
+}
+
+.profile-card {
+  background-color: #2196F3;
+  color: white;
+  border-radius: 15px;
+  padding: 30px;
+  margin: 40px 40px; /* 좌우에 20px 마진 추가 */
+  box-shadow: 0 4px 100000px rgba(0,0,0,0.1);
+}
