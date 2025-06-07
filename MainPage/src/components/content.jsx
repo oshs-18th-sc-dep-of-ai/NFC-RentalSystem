@@ -1,8 +1,10 @@
 import "./content.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-const Content = (props) => {
-  var ID = props.id;
+const Content = () => {
+  const location = useLocation();
+  const ID = location.state?.id; 
+
   function IsIDManager() {
     if (ID === "caoshsadmin") {
       return (
@@ -30,14 +32,16 @@ const Content = (props) => {
           </div>
         </>
       );
-    } else {
+    } else if (ID) {
       return (
         <>
-          <div>
-            <h3>대여현황: {0}</h3>
-          </div>
           <Link to={"/Borrow"} state={{ ID }}>
             <div className="Dayeo">🎒양심 물품 대여하기</div>
+          </Link>
+          <Link to={"/Return"} state={{ ID }}>
+            <div className="Dayeo" style={{ marginTop: "10px", background: "3493ff" }}>
+              📥양심 물품 반납하기
+            </div>
           </Link>
           <div className="text">
             <h5>
@@ -53,19 +57,22 @@ const Content = (props) => {
           </div>
         </>
       );
+    } else {
+      // ID가 없을 때
+      return <div>잘못된 접근입니다. 다시 로그인 해주세요.</div>;
     }
   }
+
   return (
-    <>
-      <div className="Content">
-        <div className="c">
-          <h2>📆 오늘의 날짜: {new Date().toLocaleDateString()}</h2>
-          <h3>여러분의 편의를 위해 노력하겠습니다.😊</h3>
-          <div className="line"></div>
-          {IsIDManager()}
-        </div>
+    <div className="Content">
+      <div className="c">
+        <h2>📆 오늘의 날짜: {new Date().toLocaleDateString()}</h2>
+        <h3>여러분의 편의를 위해 노력하겠습니다.😊</h3>
+        <div className="line"></div>
+        {IsIDManager()}
       </div>
-    </>
+    </div>
   );
 };
+
 export default Content;

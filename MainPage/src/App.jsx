@@ -1,7 +1,8 @@
 import "./App.css";
 import Router from "./shared/Router";
 import axios from "axios";
-axios.defaults.withCredentials = true;  // ✅ 모든 요청에 credentials 포함
+
+axios.defaults.withCredentials = true;  
 
 function App() {
   return <Router />;

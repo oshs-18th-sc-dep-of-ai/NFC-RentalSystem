@@ -29,7 +29,7 @@ const Mcontent = () => {
     fetchProfile();
   }, []);
 
-  // 데이터 로딩 중이면 로딩 메시지 출력
+
   if (!student) {
     return <p>로딩 중...</p>;
   }
@@ -38,7 +38,7 @@ const Mcontent = () => {
     <div className="Mcontent">
       <div className="Mcontainer">
         <div className="personal">
-          <h2> 프로필</h2>
+          <h2>프로필</h2>
           <h3>이름 : {student.student_name}</h3>
           <h3>아이디 : {student.student_id}</h3>
           <Link to={"/Info"} state={{ student }}>

@@ -3,8 +3,8 @@ import axios from "axios";
 import "./B_content.css";
 
 const Content = ({ ID }) => {
-  const [selectedItem, setSelectedItem] = useState(null); // 선택된 아이템
-  const [newItem, setNewItem] = useState({ name: "", count: 0 }); // 새 물품 추가
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [newItem, setNewItem] = useState({ name: "", count: 0 });
   const [items, setItems] = useState({
     우산: 10,
     보조배터리: 5,
@@ -45,14 +45,35 @@ const Content = ({ ID }) => {
       return;
     }
 
-    const selectedNumber = toRent[0] + 1; // ✅ 인덱스 -> 번호
-    const productName = `${selectedItem} ${selectedNumber}`; // "우산 1" 형태로
+    //  이미 대여한 번호가 있는가가
+    const alreadyRented = toRent.some((num) =>
+      rented[selectedItem].rented.includes(num)
+    );
+    if (alreadyRented) {
+      alert("이미 대여 중인 번호가 포함되어 있습니다!");
+      return;
+    }
+
+  
+    const selectedNumber = toRent[0] + 1;
+    const productName = `${selectedItem} ${selectedNumber}`;
+
+  
+    let product_id = null;
+    if (selectedItem === "우산") product_id = selectedNumber;
+    else if (selectedItem === "보조배터리") product_id = 10 + selectedNumber;
+  
+
+    if (!product_id) {
+      alert("product_id 매핑 오류");
+      return;
+    }
 
     if (window.confirm(`${productName}을 정말 대여하시겠습니까?`)) {
       try {
         const response = await axios.post(
           "http://localhost:5000/rental_request",
-          { product_name: productName },
+          { product_id },
           { withCredentials: true }
         );
         alert(response.data.message);
@@ -73,7 +94,7 @@ const Content = ({ ID }) => {
     }
   };
 
-  // ✅ 반납 로직 (프론트 로컬 상태만 갱신)
+  // 반납 로직 
   const handleReturn = () => {
     if (window.confirm("정말 반납하시겠습니까?")) {
       setRented((prev) => ({
@@ -89,7 +110,7 @@ const Content = ({ ID }) => {
     }
   };
 
-  // ✅ 관리자 - 물품 추가
+  //  관리자 - 물품 추가
   const handleAddItem = () => {
     if (newItem.name && !isNaN(newItem.count) && newItem.count > 0) {
       setItems((prev) => ({
@@ -106,7 +127,7 @@ const Content = ({ ID }) => {
     }
   };
 
-  // ✅ 관리자 - 물품 삭제
+  //  관리자 - 물품 삭제
   const handleDeleteItem = (item) => {
     if (window.confirm(`${item}을 정말 삭제하시겠습니까?`)) {
       const updatedItems = { ...items };
@@ -123,7 +144,7 @@ const Content = ({ ID }) => {
       <div className="container">
         <h1 className="title">물품 대여 시스템</h1>
 
-        {/* ✅ 관리자 - 물품 추가 */}
+        {/* 관리자 - 물품 추가 */}
         {ID === "caoshsadmin" && (
           <div className="add-item-section">
             <div className="line"></div>
@@ -150,7 +171,7 @@ const Content = ({ ID }) => {
           </div>
         )}
 
-        {/* ✅ 관리자 - 물품 목록 */}
+        {/* 관리자 - 물품 목록 */}
         {ID === "caoshsadmin" && (
           <div className="item-list">
             <h2>물품 목록</h2>
@@ -165,7 +186,7 @@ const Content = ({ ID }) => {
           </div>
         )}
 
-        {/* ✅ 학생 - 물품 선택 */}
+        {/* 학생 - 물품 선택 */}
         {ID !== "caoshsadmin" && (
           <div className="item-selection">
             {Object.keys(items).map((item) => (
@@ -183,7 +204,7 @@ const Content = ({ ID }) => {
           </div>
         )}
 
-        {/* ✅ 학생 - 대여 */}
+        {/* 학생 - 대여 */}
         {ID !== "caoshsadmin" && selectedItem && (
           <div className="rental-section">
             <h2>{selectedItem} 대여할 번호</h2>
@@ -204,27 +225,8 @@ const Content = ({ ID }) => {
           </div>
         )}
 
-        {/* ✅ 학생 - 반납 */}
-        {ID !== "caoshsadmin" && selectedItem && rented[selectedItem].rented.length > 0 && (
-          <div className="return-section">
-            <h2>{selectedItem} 반납할 번호</h2>
-            <div className="checkbox-grid">
-              {rented[selectedItem].rented.map((index) => (
-                <div key={index} className="checkbox-container">
-                  <input
-                    type="checkbox"
-                    checked={toReturn.includes(index)}
-                    onChange={() => handleReturnCheckboxChange(index)}
-                  />
-                  <div>{index + 1}</div>
-                </div>
-              ))}
-            </div>
-            <button onClick={handleReturn} disabled={toReturn.length === 0}>반납</button>
-          </div>
-        )}
-
-        {/* ✅ 대여 목록 */}
+        
+        {/* 대여 목록 */}
         <div className="rented-list">
           <h3>대여된 물품</h3>
           {Object.keys(rented).map((item) => (

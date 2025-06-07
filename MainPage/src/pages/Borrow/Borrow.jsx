@@ -8,14 +8,14 @@ axios.defaults.withCredentials = true;
 
 function Borrow() {
   const location = useLocation();
-  const id = location.state?.ID || "UNKNOWN";  // ✅ undefined 방지
-  console.log("📢 Borrow.jsx - ID:", id);  // ✅ 디버깅 로그 추가!
+  const id = location.state?.ID || "UNKNOWN";  
+  console.log("📢 Borrow.jsx - ID:", id); 
 
   return (
     <>
       <div className="Borrow">
         <Header />
-        <Content ID={id} />  // ✅ props로 넘김
+        <Content ID={id} />  
       </div>
     </>
   );
