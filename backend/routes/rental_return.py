@@ -1,38 +1,39 @@
 # React에서 /rental_request_return/:id를 호출하면 해당 제품의 반납 요청 (반납 대기 상태로 변경)
 # 관리자가 /admin/approve_return/:id를 호출하면 최종 반납 승인 (반납 완료 상태로 변경)
 
-from flask import Blueprint, jsonify, session, url_for
-from extensions import mysql
+from flask import Blueprint, request, jsonify, session
+from extensions import mysql  # ← app이 아니라 extensions에서 import!
 
 # 블루프린트
-return_bp = Blueprint('rental_return', __name__)
+rental_return_bp = Blueprint('rental_return', __name__)
 
 # 반납 요청(React에서 `/rental_request_return/:id` 호출)
-@return_bp.route('/rental_request_return/<int:id>', methods=['POST'])
-def request_rental_return(id):
+@rental_return_bp.route('/rental_request_return/<int:rental_id>', methods=['POST'])
+def rental_request_return(rental_id):
     if 'session_student_id' not in session:
-        app.register_blueprint(auth_bp, url_prefix='/auth')
-        return jsonify({"message": "로그인이 필요합니다.", "status": "error", "redirect_url": url_for('outh.login', _external=True)}), 401 # 리다이렉트 추가
+        return jsonify({"message": "로그인이 필요합니다.", "status": "error"}), 401
 
     cursor = mysql.connection.cursor()
-    cursor.execute("""
-        UPDATE Rentals SET rental_status = 2 WHERE id = %s
-    """, (id,))
+    # 반납 버튼 누른 순간의 시간 기록!
+    cursor.execute(
+        "UPDATE Rentals SET return_time = NOW(), rental_status = 2 WHERE rental_id = %s AND student_id = %s",
+        (rental_id, session['session_student_id'])
+    )
     mysql.connection.commit()
     cursor.close()
-
-    return jsonify({"message": "반납 요청이 완료되었습니다. 관리자의 승인을 기다려주세요.", "status": "pending"}), 200
+    return jsonify({"message": "반납 요청 완료!", "status": "success"})
 
 # 관리자가 반납 승인(React에서 `/admin/approve_return/:_id` 호출)
-@return_bp.route('/admin/approve_return/<int:id>', methods=['POST'])
+@rental_return_bp.route('/admin/approve_return/<int:id>', methods=['POST'])
 def approve_rental_return(id):
     if 'admin_id' not in session:
-        return jsonify({"message": "관리자 권한이 필요합니다.", "status": "error", "redirect_url": url_for('admin.login', _external=True)}), 403 # 리다이렉트 추가
+        return jsonify({"message": "관리자 권한이 필요합니다.", "status": "error"}), 403
 
     cursor = mysql.connection.cursor()
-    cursor.execute("""
-        UPDATE Rentals SET rental_status = 0, rental_returntime = NOW() WHERE id = %s AND rental_status = 2
-    """, (id,))
+    cursor.execute(
+        "UPDATE Rentals SET rental_status = 0 WHERE rental_id = %s AND rental_status = 2",
+        (id,)
+    )
     mysql.connection.commit()
     cursor.close()
 
