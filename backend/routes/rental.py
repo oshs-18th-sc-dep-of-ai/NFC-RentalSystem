@@ -3,6 +3,7 @@
 
 from flask import Blueprint, request, jsonify, session, url_for
 from extensions import mysql
+from flask_cors import cross_origin
 
 # 블루프린트 
 rental_bp = Blueprint('rental', __name__)
@@ -34,3 +35,27 @@ def rent_product(product_id):
     cursor.close()
 
     return jsonify({"message": "대여가 완료되었습니다!", "status": "success", "redirect_url": url_for('profile.profile', _external=True)}), 200 # 리다이렉트 추가
+
+@rental_bp.route('/rental_request', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def rental_request():
+    if 'session_student_id' not in session:
+        return jsonify({"message": "로그인이 필요합니다.", "status": "error"}), 401
+
+    data = request.get_json()
+    print("받은 데이터:", data)
+
+    product_id = data.get('product_id')
+    if not product_id:
+        return jsonify({"message": "제품 ID가 필요합니다.", "status": "error"}), 400
+
+    cursor = mysql.connection.cursor()
+    #  대여일은 NOW(), 반납예정일은 NOW() + INTERVAL 2 DAY
+    cursor.execute(
+        "INSERT INTO Rentals (student_id, product_id, rental_time, expected_return_time, rental_status) VALUES (%s, %s, NOW(), DATE_ADD(NOW(), INTERVAL 2 DAY), 1)",
+        (session['session_student_id'], product_id)
+    )
+    mysql.connection.commit()
+    cursor.close()
+
+    return jsonify({"message": "대여 완료", "status": "success"})
