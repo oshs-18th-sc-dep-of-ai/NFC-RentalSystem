@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-axios.defaults.withCredentials = true;  // ✅ 모든 요청에 credentials 포함
+import "./styles.css";
 
 function Login() {
   let [id, setId] = useState("");
