@@ -11,16 +11,21 @@ auth_bp = Blueprint('auth', __name__)
 @auth_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
+    print("data from request:", data)
     input_student_id = data.get('student_id')
     input_password = data.get('password')
 
     cursor = mysql.connection.cursor()
-    cursor.execute("SELECT student_id, student_name, student_password FROM Students WHERE student_id = %s",
+    cursor.execute("SELECT student_id, student_name, student_pw FROM Students WHERE student_id = %s",
                    (input_student_id,))
     student = cursor.fetchone()
     cursor.close()
 
-    if student and student[2] == input_password:
+    print("student from DB:", repr(student))
+    print("input_password:", repr(input_password))
+    print("student_id from input:", repr(input_student_id))
+
+    if student and str(student[2]) == str(input_password):
         # 로그인 성공 시 세션 저장 (React에서 세션 유지 됨됨)
         session['session_student_id'] = student[0]
         session['session_student_name'] = student[1]
