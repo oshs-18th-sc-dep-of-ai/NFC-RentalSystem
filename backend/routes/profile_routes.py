@@ -19,7 +19,7 @@ def profile():
     try:
         cursor = mysql.connection.cursor()
 
-        # ✅ 학생 정보 조회
+        # 학생 정보 조회
         cursor.execute("""
             SELECT student_id, student_name, grade, class, number
             FROM Students WHERE student_id = %s
@@ -33,45 +33,35 @@ def profile():
                 "status": "error"
             }), 404
 
-        # ✅ 현재 대여 중인 물품 조회 (컬럼명 주의!)
+        # 현재 대여 중인 물품 조회 컬럼명 주의!
         cursor.execute("""
-            SELECT p.product_name, r.product_id, r.rental_time, r.return_time
+            SELECT p.product_name, r.rental_time, r.expected_return_time, r.return_time, r.rental_status, r.rental_id, r.product_id
             FROM Rentals r
             JOIN Products p ON r.product_id = p.product_id
-            WHERE r.student_id = %s AND r.rental_status = 1
-        """, (student_id,))
+            WHERE r.student_id = %s
+        """, (session['session_student_id'],))
         rentals = cursor.fetchall()
         cursor.close()
 
-        # ✅ JSON 형태로 변환
-        rental_summary = {}
-        for row in rentals:
-            product_name = row[0]
-            product_id = row[1]
-            rentaltime = row[2]
-            return_time = row[3]
-
-            if product_name not in rental_summary:
-                rental_summary[product_name] = []
-
-            # ✅ 반납 예정 시간 = 대여 시간 + 2일
-            expected_return_time = (
-                (rentaltime + timedelta(days=2)).strftime('%Y-%m-%d %H:%M:%S')
-                if rentaltime else "반납 예정 없음"
-            )
-
-            rental_summary[product_name].append({
-                "product_id": product_id,
-                "return_time": return_time.strftime('%Y-%m-%d %H:%M:%S') if return_time else expected_return_time
-            })
+        rental_records = [
+            {
+                "product_name": rental[0],
+                "rental_time": rental[1].strftime('%Y-%m-%d %H:%M:%S') if rental[1] else None,
+                "expected_return_time": rental[2].strftime('%Y-%m-%d %H:%M:%S') if rental[2] else None,
+                "return_time": rental[3].strftime('%Y-%m-%d %H:%M:%S') if rental[3] else None,
+                "status": "대여 중" if rental[4] == 1 else "반납 대기 중" if rental[4] == 2 else "반납 완료", 
+                "rental_id": rental[5],
+                "product_id": rental[6],
+            }
+            for rental in rentals
+        ]
 
         return jsonify({
             "student": {
                 "student_id": student[0],
-                "student_name": student[1]
+                "student_name": student[1],
             },
-            "rentals": rental_summary,
-            "status": "success"
+            "rentals": rental_records
         }), 200
 
     except Exception as e:
