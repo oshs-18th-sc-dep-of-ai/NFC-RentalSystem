@@ -1,7 +1,6 @@
 from flask import Blueprint, jsonify, request, session, url_for
 from extensions import mysql  
 
-# 블루프린트
 admin_bp = Blueprint('admin', __name__)
 
 # 관리자 계정 아이거진짜중요한건데 말하고다니지마셈 이빨다뽑을거임그러면
@@ -19,7 +18,11 @@ def admin_login():
         session['admin_id'] = admin_id  
         return jsonify({"message": "관리자 로그인 성공!", "status": "success"}), 200
     else:
-        return jsonify({"message": "관리자 계정 정보가 틀렸습니다.", "status": "error", "redirect_url": url_for('admin.login', _external=True)}), 401 # 리다이렉트 추가
+        return jsonify({
+            "message": "관리자 계정 정보가 틀렸습니다.",
+            "status": "error",
+            "redirect_url": url_for('admin.admin_login', _external=True)
+        }), 401
 
 # 관리자 로그아웃
 @admin_bp.route('/admin/logout', methods=['POST'])
@@ -31,18 +34,21 @@ def admin_logout():
 @admin_bp.route('/admin/add_product', methods=['POST'])
 def add_product():
     if 'admin_id' not in session:
-        return jsonify({"message": "관리자 권한이 필요합니다.", "status": "error", "redirect_url": url_for('admin.login', _external=True)}), 403 # 리다이렉트 추가
+        return jsonify({
+            "message": "관리자 권한이 필요합니다.",
+            "status": "error",
+            "redirect_url": url_for('admin.admin_login', _external=True)
+        }), 403
 
     data = request.get_json()
     product_name = data.get('product_name')
     category = data.get('category')
-    quantity = data.get('quantity', 0)  
+    quantity = data.get('quantity', 0)
 
     if not product_name or not category or not isinstance(quantity, int) or quantity <= 0:
         return jsonify({"message": "올바른 제품명, 카테고리, 수량을 입력하세요.", "status": "error"}), 400
 
     cursor = mysql.connection.cursor()
-
     cursor.execute("SELECT quantity FROM Products WHERE product_name = %s AND category = %s", (product_name, category))
     existing_product = cursor.fetchone()
 
@@ -59,16 +65,17 @@ def add_product():
 
     return jsonify({"message": f"{product_name}({quantity}개) 추가 완료!", "status": "success"}), 201
 
-
-
 # 물품 삭제
 @admin_bp.route('/admin/delete_product/<int:product_id>', methods=['DELETE'])
 def delete_product(product_id):
-    if 'admin_id' not in session:  
-        return jsonify({"message": "관리자 권한이 필요합니다.", "status": "error", "redirect_url": url_for('admin.login', _external=True)}), 403 # 리다이렉트 추가
+    if 'admin_id' not in session:
+        return jsonify({
+            "message": "관리자 권한이 필요합니다.",
+            "status": "error",
+            "redirect_url": url_for('admin.admin_login', _external=True)
+        }), 403
 
     cursor = mysql.connection.cursor()
-
     cursor.execute("SELECT * FROM Products WHERE product_id = %s", (product_id,))
     product = cursor.fetchone()
 
@@ -81,16 +88,20 @@ def delete_product(product_id):
 
     return jsonify({"message": "물품이 삭제되었습니다!", "status": "success"}), 200
 
-
 # 반납 승인
 @admin_bp.route('/admin/approve_return/<int:rental_id>', methods=['POST'])
 def approve_rental_return(rental_id):
     if 'admin_id' not in session:
-        return jsonify({"message": "관리자 권한이 필요합니다.", "status": "error", "redirect_url": url_for('admin.login', _external=True)}), 403 # 리다이렉트 추가
+        return jsonify({
+            "message": "관리자 권한이 필요합니다.",
+            "status": "error",
+            "redirect_url": url_for('admin.admin_login', _external=True)
+        }), 403
 
     cursor = mysql.connection.cursor()
     cursor.execute("""
-        UPDATE Rentals SET rental_status = 0, rental_returntime = NOW() WHERE rental_id = %s AND rental_status = 2
+        UPDATE Rentals SET rental_status = 0, rental_returntime = NOW() 
+        WHERE rental_id = %s AND rental_status = 2
     """, (rental_id,))
     mysql.connection.commit()
     cursor.close()
