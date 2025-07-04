@@ -1,41 +1,58 @@
-#  React에서 로그인 후 세션을 유지할 수 있도록 session에 저장
-# 로그아웃 시 session.pop()으로 세션 삭제하여 상태 유지 관리
+from flask import Blueprint, request, session, jsonify
+from extensions import mysql
+from routes.admin import ADMIN_ID, ADMIN_PASSWORD  # 관리자 계정
 
-from flask import Blueprint, request, jsonify, session, url_for
-from extensions import mysql 
-
-# 블루프린트
 auth_bp = Blueprint('auth', __name__)
 
-# 로그인 (React에서 `/login` 호출)
+# 로그인 라우트
 @auth_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    print("data from request:", data)
     input_student_id = data.get('student_id')
     input_password = data.get('password')
 
+    # 관리자 로그인 처리
+    if input_student_id == ADMIN_ID and input_password == ADMIN_PASSWORD:
+        session['admin_id'] = ADMIN_ID
+        return jsonify({
+            "message": "관리자 로그인 성공!",
+            "status": "admin",
+            "admin_id": ADMIN_ID
+        }), 200
+
+    # 학생 로그인 처리
     cursor = mysql.connection.cursor()
     cursor.execute("SELECT student_id, student_name, student_pw FROM Students WHERE student_id = %s",
                    (input_student_id,))
     student = cursor.fetchone()
     cursor.close()
 
-    print("student from DB:", repr(student))
-    print("input_password:", repr(input_password))
-    print("student_id from input:", repr(input_student_id))
-
     if student and str(student[2]) == str(input_password):
-        # 로그인 성공 시 세션 저장 (React에서 세션 유지 됨됨)
         session['session_student_id'] = student[0]
         session['session_student_name'] = student[1]
-        return jsonify({"message": "로그인 성공!", "status": "success", "student_id": student[0], "student_name": student[1], "redirect_url": url_for('profile.profile', _external=True)}), 200 # 리다이렉트 추가
+        return jsonify({
+            "message": "로그인 성공!",
+            "status": "student",
+            "student_id": student[0],
+            "student_name": student[1]
+        }), 200
     else:
-        return jsonify({"message": "잘못된 ID 또는 비밀번호입니다.", "status": "error"}), 401
+        return jsonify({
+            "message": "잘못된 ID 또는 비밀번호입니다.",
+            "status": "error"
+        }), 401
 
-# 로그아웃 (React에서 `/logout` 호출)
+# 로그아웃
 @auth_bp.route('/logout', methods=['POST'])
 def logout():
-    session.pop('session_student_id', None)
-    session.pop('session_student_name', None)
-    return jsonify({"message": "로그아웃 되었습니다.", "status": "success", "redirect_url": url_for('outh.login', _external=True)}), 200 # 리다이렉트 추가
+    session.clear()
+    return jsonify({"message": "로그아웃 되었습니다."})
+
+# 세션 확인
+@auth_bp.route('/check_session', methods=['GET'])
+def check_session():
+    return jsonify({
+        "admin_id": session.get("admin_id"),
+        "student_id": session.get("session_student_id"),
+        "student_name": session.get("session_student_name")
+    }), 200
