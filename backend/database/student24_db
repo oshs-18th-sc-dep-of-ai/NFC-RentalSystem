@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS Students (
     year INT NULL,
     grade INT NULL,
     class INT NULL,
-    number INT NULL
+    number INT NULL 
 );
 
 INSERT INTO Students (StudentID,Name,Password,Year,Grade,Class,Number) VALUES
