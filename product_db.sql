@@ -1,0 +1,31 @@
+CREATE DATABASE IF NOT EXISTS student24_db;
+DROP TABLE IF EXISTS Products;
+
+USE student24_db;
+
+-- 물품 테이블 (Products)
+CREATE TABLE Products (
+    product_id INT AUTO_INCREMENT PRIMARY KEY,
+    product_name VARCHAR(255) NOT NULL,
+    category VARCHAR(100) NOT NULL,
+    available TINYINT(1) DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_general_ci;
+
+SET NAMES utf8mb4;
+
+
+-- 우산 30개
+INSERT INTO Products (product_name, category) VALUES
+('우산 1', '우산'), ('우산 2', '우산'), ('우산 3', '우산'), ('우산 4', '우산'), ('우산 5', '우산'),
+('우산 6', '우산'), ('우산 7', '우산'), ('우산 8', '우산'), ('우산 9', '우산'), ('우산 10', '우산'),
+('우산 11', '우산'), ('우산 12', '우산'), ('우산 13', '우산'), ('우산 14', '우산'), ('우산 15', '우산'),
+('우산 16', '우산'), ('우산 17', '우산'), ('우산 18', '우산'), ('우산 19', '우산'), ('우산 20', '우산'),
+('우산 21', '우산'), ('우산 22', '우산'), ('우산 23', '우산'), ('우산 24', '우산'), ('우산 25', '우산'),
+('우산 26', '우산'), ('우산 27', '우산'), ('우산 28', '우산'), ('우산 29', '우산'), ('우산 30', '우산'),
+('보조배터리 1', '보조배터리'), ('보조배터리 2', '보조배터리'), ('보조배터리 3', '보조배터리'), 
+('보조배터리 4', '보조배터리'), ('보조배터리 5', '보조배터리'), ('보조배터리 6', '보조배터리'), 
+('보조배터리 7', '보조배터리'), ('보조배터리 8', '보조배터리'), ('보조배터리 9', '보조배터리'), 
+('보조배터리 10', '보조배터리');

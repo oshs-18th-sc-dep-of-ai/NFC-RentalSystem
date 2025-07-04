@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>양심물품 대여</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background: #3498db;
+            color: white;
+            padding: 10px;
+            font-size: 20px;
+        }
+        .button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">양심물품대여</div>
+        <p><strong>오늘의 날짜:</strong> <span id="today"></span></p>
+        <p>여러분의 편의를 위해 노력하겠습니다. 😊</p>
+        <p><strong>대여현황:</strong> 없음</p>
+        <a href="#" class="button">📕 양심 물품 대여하기</a>
+        <p>※ 2일 이내 반납하지 않으면 불이익이 있습니다.</p>
+    </div>
+    <script>
+        document.getElementById("today").innerText = new Date().toISOString().split('T')[0];
+    </script>
+</body>
+</html>
