@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS Students (
     number INT NULL
 );
 
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
+INSERT INTO Students (`StudentID`,`Name`,`Password`,`Year`,`Grade`,`Class`,`Number`) VALUES
 	 ('2410101','KAN TATIANA','123456','24','1','1','1'),
 	 ('2410102','고민지','123456','24','1','1','2'),
 	 ('2410103','구예린','123456','24','1','1','3'),
@@ -44,7 +44,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2410133','최은서','123456','24','1','1','33'),
 	 ('2410134','황태현','123456','24','1','1','34'),
 	 ('2410135','황혜빈','123456','24','1','1','35');
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2410201','김서진','123456','24','1','2','1'),
 	 ('2410202','김선율','123456','24','1','2','2'),
 	 ('2410203','김장욱','123456','24','1','2','3'),
@@ -79,7 +78,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2410233','한재웅','123456','24','1','2','33'),
 	 ('2410234','한지민','123456','24','1','2','34'),
 	 ('2410235','황은혁','123456','24','1','2','35');
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2410302','기가연','123456','24','1','3','2'),
 	 ('2410304','김민지','123456','24','1','3','4'),
 	 ('2410305','김성현','123456','24','1','3','5'),
@@ -111,7 +109,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2410332','최우찬','123456','24','1','3','32'),
 	 ('2410333','최인석','123456','24','1','3','33'),
 	 ('2410335','황수빈','123456','24','1','3','35');
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2410401','곽승우','123456','24','1','4','1'),
 	 ('2410402','김규림','123456','24','1','4','2'),
 	 ('2410403','김나현','123456','24','1','4','3'),
@@ -145,7 +142,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2410433','허소민','123456','24','1','4','33'),
 	 ('2410434','홍예서','123456','24','1','4','34'),
 	 ('2410435','홍재만','123456','24','1','4','35');
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2410501','김경은','123456','24','1','5','1'),
 	 ('2410503','김도윤','123456','24','1','5','3'),
 	 ('2410504','김윤호','123456','24','1','5','4'),
@@ -181,7 +177,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2410534','한지예','123456','24','1','5','34'),
 	 ('2410535','홍나연','123456','24','1','5','35'),
 	 ('2410536','황윤주','123456','24','1','5','36');
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2410601','강서현','123456','24','1','6','1'),
 	 ('2410602','김규혁','123456','24','1','6','2'),
 	 ('2410603','김도연','123456','24','1','6','3'),
@@ -215,7 +210,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2410632','조용훈','123456','24','1','6','32'),
 	 ('2410633','한민우','123456','24','1','6','33'),
 	 ('2410634','한예지','123456','24','1','6','34');
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2410701','NOGAY ANDREY VLADIMIROVICH','123456','24','1','7','1'),
 	 ('2410703','강세언','123456','24','1','7','3'),
 	 ('2410704','고은결','123456','24','1','7','4'),
@@ -250,7 +244,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2410734','한정원','123456','24','1','7','34'),
 	 ('2410735','함승현','123456','24','1','7','35'),
 	 ('2410736','강동성','123456','24','1','7','36');
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2410801','곽민욱','123456','24','1','8','1'),
 	 ('2410802','김동우','123456','24','1','8','2'),
 	 ('2410803','김민혁','123456','24','1','8','3'),
@@ -286,7 +279,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2410833','제갈채린','123456','24','1','8','33'),
 	 ('2410834','한상빈','123456','24','1','8','34'),
 	 ('2410835','한서영','123456','24','1','8','35');
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2410902','김가람','123456','24','1','9','2'),
 	 ('2410903','김민영','123456','24','1','9','3'),
 	 ('2410904','김민정','123456','24','1','9','4'),
@@ -320,7 +312,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2410933','차효린','123456','24','1','9','33'),
 	 ('2410934','최서영','123456','24','1','9','34'),
 	 ('2410935','홍가연','123456','24','1','9','35');
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2411001','고병운','123456','24','1','10','1'),
 	 ('2411002','곽다윤','123456','24','1','10','2'),
 	 ('2411003','김동훈','123456','24','1','10','3'),
@@ -356,7 +347,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2411033','최민국','123456','24','1','10','33'),
 	 ('2411034','최지훈','123456','24','1','10','34'),
 	 ('2411035','한승하','123456','24','1','10','35');
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2411101','LI ALEKSEY','123456','24','1','11','1'),
 	 ('2411103','곽채윤','123456','24','1','11','3'),
 	 ('2411104','권주희','123456','24','1','11','4'),
@@ -390,7 +380,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2411133','조용현','123456','24','1','11','33'),
 	 ('2411134','최은서','123456','24','1','11','34'),
 	 ('2411135','홍승빈','123456','24','1','11','35');
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2411202','강지연','123456','24','1','12','2'),
 	 ('2411203','김나경','123456','24','1','12','3'),
 	 ('2411204','김동호','123456','24','1','12','4'),
@@ -425,7 +414,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2411235','현솔민','123456','24','1','12','35'),
 	 ('2411236','박서연','123456','24','1','12','36');
 // 2학년 
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2420101','김가빈','123456','24','2','1','1'),
 	 ('2420102','김가은','123456','24','2','1','2'),
 	 ('2420103','김도현','123456','24','2','1','3'),
@@ -459,7 +447,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2420132','하병욱','123456','24','2','1','32'),
 	 ('2420133','한예진','123456','24','2','1','33'),
 	 ('2420134','홍서연','123456','24','2','1','34');
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2420201','가현서','123456','24','2','2','1'),
 	 ('2420202','김가영','123456','24','2','2','2'),
 	 ('2420203','김민지','123456','24','2','2','3'),
@@ -493,7 +480,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2420231','최민기','123456','24','2','2','31'),
 	 ('2420232','최아영','123456','24','2','2','32'),
 	 ('2420233','조은찬','123456','24','2','2','33');
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2420301','강다인','123456','24','2','3','1'),
 	 ('2420302','강민재','123456','24','2','3','2'),
 	 ('2420303','강예원','123456','24','2','3','3'),
@@ -528,7 +514,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2420335','조서영','123456','24','2','3','35'),
 	 ('2420336','최수현','123456','24','2','3','36'),
 	 ('2420337','한유진','123456','24','2','3','37');
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2420401','JIN LITING','123456','24','2','4','1'),
 	 ('2420402','강단영','123456','24','2','4','2'),
 	 ('2420403','강채영','123456','24','2','4','3'),
@@ -561,7 +546,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2420430','한동균','123456','24','2','4','30'),
 	 ('2420431','허윤아','123456','24','2','4','31'),
 	 ('2420432','고의승','123456','24','2','4','32');
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2420501','강지우','123456','24','2','5','1'),
 	 ('2420502','김도연','123456','24','2','5','2'),
 	 ('2420503','김도윤','123456','24','2','5','3'),
@@ -596,7 +580,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2420534','지민정','123456','24','2','5','34'),
 	 ('2420535','한민준','123456','24','2','5','35'),
 	 ('2420536','홍주연','123456','24','2','5','36');
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2420601','고승원','123456','24','2','6','1'),
 	 ('2420602','고준서','123456','24','2','6','2'),
 	 ('2420603','김나연','123456','24','2','6','3'),
@@ -630,7 +613,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2420632','조민석','123456','24','2','6','32'),
 	 ('2420633','주현정','123456','24','2','6','33'),
 	 ('2420634','박준영','123456','24','2','6','34');
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2420701','권림','123456','24','2','7','1'),
 	 ('2420702','김민수','123456','24','2','7','2'),
 	 ('2420703','김예빈','123456','24','2','7','3'),
@@ -663,7 +645,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2420732','황윤빈','123456','24','2','7','32'),
 	 ('2420733','황지희','123456','24','2','7','33'),
 	 ('2420734','황혁','123456','24','2','7','34');
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2420801','강건후','123456','24','2','8','1'),
 	 ('2420802','곽수빈','123456','24','2','8','2'),
 	 ('2420803','곽우진','123456','24','2','8','3'),
@@ -684,7 +665,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2420832','정학훈','123456','24','2','8','32'),
 	 ('2420833','최윤겸','123456','24','2','8','33'),
 	 ('2420836','황지원','123456','24','2','8','36');
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2420901','NAMVLADISLAV','123456','24','2','9','1'),
 	 ('2420902','김경수','123456','24','2','9','2'),
 	 ('2420903','김경영','123456','24','2','9','3'),
@@ -719,7 +699,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2420932','최서준','123456','24','2','9','32'),
 	 ('2420933','하준영','123456','24','2','9','33'),
 	 ('2420934','홍진영','123456','24','2','9','34');
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2421001','고미선','123456','24','2','10','1'),
 	 ('2421002','김난희','123456','24','2','10','2'),
 	 ('2421003','김민정','123456','24','2','10','3'),
@@ -756,7 +735,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2421034','최예인','123456','24','2','10','34'),
 	 ('2421035','한지원','123456','24','2','10','35'),
 	 ('2421036','황예성','123456','24','2','10','36');
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2421101','강채완','123456','24','2','11','1'),
 	 ('2421102','강현서','123456','24','2','11','2'),
 	 ('2421103','구연정','123456','24','2','11','3'),
@@ -775,7 +753,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2421125','정재호','123456','24','2','11','25'),
 	 ('2421131','허건회','123456','24','2','11','31'),
 	 ('2421133','구서진','123456','24','2','11','33');
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2421201','강다현','123456','24','2','12','1'),
 	 ('2421202','공현아','123456','24','2','12','2'),
 	 ('2421203','공현준','123456','24','2','12','3'),
@@ -812,7 +789,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2421235','한정우','123456','24','2','12','35'),
 	 ('2421236','한찬희','123456','24','2','12','36'),
 	 ('2421237','함세령','123456','24','2','12','37');
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2421301','강혜원','123456','24','2','13','1'),
 	 ('2421302','곽상원','123456','24','2','13','2'),
 	 ('2421303','권범준','123456','24','2','13','3'),
@@ -847,7 +823,6 @@ INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUE
 	 ('2421334','최선우','123456','24','2','13','34'),
 	 ('2421335','함청비','123456','24','2','13','35'),
 	 ('2421336','안수빈','123456','24','2','13','36');
-INSERT INTO Students (StudentID,Name,Password,`Year`,Grade,Class,`Number`) VALUES
 	 ('2421401','구도현','123456','24','2','14','1'),
 	 ('2421402','김건희','123456','24','2','14','2'),
 	 ('2421403','김민선','123456','24','2','14','3'),
