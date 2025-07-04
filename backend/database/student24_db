@@ -9,8 +9,8 @@ CREATE TABLE IF NOT EXISTS Students (
     number INT NULL
 );
 
-INSERT INTO Students (`StudentID`,`Name`,`Password`,`Year`,`Grade`,`Class`,`Number`) VALUES
-	 ('2410101','KAN TATIANA','123456','24','1','1','1'),
+INSERT INTO student24 (student_id, name, password, age, grade, class, num)
+VALUES	 ('2410101','KAN TATIANA','123456','24','1','1','1'),
 	 ('2410102','고민지','123456','24','1','1','2'),
 	 ('2410103','구예린','123456','24','1','1','3'),
 	 ('2410104','권보민','123456','24','1','1','4'),
