@@ -10,8 +10,3 @@ CREATE TABLE IF NOT EXISTS Products (
     available BOOLEAN DEFAULT TRUE,  -- 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
--- 우산 30개, 보조배터리 20개 
-INSERT INTO Products (product_name, category, quantity) VALUES
-('우산', '우산', 30), 
-('보조배터리', '보조배터리', 20);
