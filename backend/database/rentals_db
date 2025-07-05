@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS Rentals (
     rental_rentaltime DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     rental_returntime DATETIME NULL,
     rental_status TINYINT NOT NULL DEFAULT 1,
-    CONSTRAINT chk_rental_status CHECK (rental_status IN (0, 1, 2)),
+    CONSTRAINT chk_rental_status CHECK (rental_status IN (0, 1, 2, 3, 4)),
     CONSTRAINT fk_rentals_students FOREIGN KEY (student_id)
       REFERENCES Students(student_id) ON DELETE CASCADE,
     CONSTRAINT fk_rentals_products FOREIGN KEY (product_id)
