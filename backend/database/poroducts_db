@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS student24_db;
-USE student24_db;
+CREATE DATABASE IF NOT EXISTS student24;
+USE student24;
 
 --  물품 테이블 (Products)
 CREATE TABLE IF NOT EXISTS Products (
