@@ -48,7 +48,7 @@ def logout():
     session.clear()
     return jsonify({"message": "로그아웃 되었습니다."})
 
-# 세션 확인
+# ✅ 세션 확인
 @auth_bp.route('/check_session', methods=['GET'])
 def check_session():
     return jsonify({
