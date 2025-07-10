@@ -1,8 +1,9 @@
 from flask import Blueprint, request, session, jsonify
-from extensions import mysql
+from extensions import DatabaseUtil
 from routes.admin import ADMIN_ID, ADMIN_PASSWORD  # 관리자 계정
 
 auth_bp = Blueprint('auth', __name__)
+
 
 # 로그인 라우트
 @auth_bp.route('/login', methods=['POST'])
@@ -20,12 +21,18 @@ def login():
             "admin_id": ADMIN_ID
         }), 200
 
+    dbutil = DatabaseUtil(
+        host="",  # TODO: 인자 채우기, 하드코딩 금지
+        username="",
+        password="",
+    )
+
     # 학생 로그인 처리
-    cursor = mysql.connection.cursor()
-    cursor.execute("SELECT student_id, student_name, student_pw FROM Students WHERE student_id = %s",
-                   (input_student_id,))
-    student = cursor.fetchone()
-    cursor.close()
+    student = dbutil.query(
+        "SELECT student_id, student_name, student_pw FROM Students WHERE student_id = %(student_id)s",
+        student_id=input_student_id).result
+
+    dbutil.commit()
 
     if student and str(student[2]) == str(input_password):
         session['session_student_id'] = student[0]
@@ -42,11 +49,13 @@ def login():
             "status": "error"
         }), 401
 
+
 # 로그아웃
 @auth_bp.route('/logout', methods=['POST'])
 def logout():
     session.clear()
     return jsonify({"message": "로그아웃 되었습니다."})
+
 
 # ✅ 세션 확인
 @auth_bp.route('/check_session', methods=['GET'])

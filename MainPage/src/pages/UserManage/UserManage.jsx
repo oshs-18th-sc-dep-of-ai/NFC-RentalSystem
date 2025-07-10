@@ -10,7 +10,7 @@ function UserManage() {
 
   useEffect(() => {
     // ✅ 세션 확인 API 요청
-    axios.get("http://localhost:5000/check-session")
+    axios.get("http://localhost:5000/check_session")
       .then((res) => {
         console.log("📢 세션 정보:", res.data); // 디버깅용
         setAdminID(res.data.admin_id);  // ✅ 세션에서 admin_id 가져옴
