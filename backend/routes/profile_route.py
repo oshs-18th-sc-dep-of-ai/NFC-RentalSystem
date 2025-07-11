@@ -1,7 +1,7 @@
 # React에서 /profile API를 호출->  학생 정보 + 대여 목록 확인 가능!
 
 from flask import Blueprint, jsonify, session, url_for
-from extensions import mysql
+from backend.utils.database_util import DatabaseUtil
 
 # 블루프린트 
 profile_bp = Blueprint('profile', __name__)
@@ -12,24 +12,20 @@ def profile():
     if 'session_student_id' not in session:
         return jsonify({"message": "로그인이 필요합니다.", "status": "error", "redirect_url": url_for('outh.login', _external=True)}), 401 # 리다이렉트 추가
 
-    cursor = mysql.connection.cursor()
-
+    dbutil = DatabaseUtil()
     # 학생 정보 조회
-    cursor.execute("""
+    student = dbutil.query("""
         SELECT student_id, student_name, student_grade, student_class, student_number
         FROM Students WHERE student_id = %s
-    """, (session['session_student_id'],))
-    student = cursor.fetchone()
+    """, (session['session_student_id'],)).result
 
     # 대여한 물품 조회
-    cursor.execute("""
+    rentals = dbutil.query_many("""
         SELECT p.product_name, r.rental_rentaltime, r.rental_returntime, r.rental_status, r.rental_id
         FROM Rentals r
         JOIN Products p ON r.product_id = p.product_id
         WHERE r.student_id = %s
-    """, (session['session_student_id'],))
-    rentals = cursor.fetchall()
-    cursor.close()
+    """, (session['session_student_id'],)).result
 
     # 리액트에서 쉽게 사용할 수 있는 !!! JSON응답으로 바뀸~
     rental_records = [

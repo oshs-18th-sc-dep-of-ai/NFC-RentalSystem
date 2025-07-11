@@ -1,6 +1,6 @@
 from flask import Blueprint, request, session, jsonify
-from extensions import DatabaseUtil
-from routes.admin import ADMIN_ID, ADMIN_PASSWORD  # 관리자 계정
+from backend.utils.database_util import DatabaseUtil
+# from routes.admin import ADMIN_ID, ADMIN_PASSWORD  # 관리자 계정
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -13,19 +13,15 @@ def login():
     input_password = data.get('password')
 
     # 관리자 로그인 처리
-    if input_student_id == ADMIN_ID and input_password == ADMIN_PASSWORD:
-        session['admin_id'] = ADMIN_ID
-        return jsonify({
-            "message": "관리자 로그인 성공!",
-            "status": "admin",
-            "admin_id": ADMIN_ID
-        }), 200
+    # if input_student_id == ADMIN_ID and input_password == ADMIN_PASSWORD:
+        # session['admin_id'] = ADMIN_ID
+        # return jsonify({
+            # "message": "관리자 로그인 성공!",
+            # "status": "admin",
+            # "admin_id": ADMIN_ID
+        # }), 200
 
-    dbutil = DatabaseUtil(
-        host="",  # TODO: 인자 채우기, 하드코딩 금지
-        username="",
-        password="",
-    )
+    dbutil = DatabaseUtil()
 
     # 학생 로그인 처리
     student = dbutil.query(

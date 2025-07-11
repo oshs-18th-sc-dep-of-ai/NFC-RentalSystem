@@ -1,7 +1,7 @@
 import traceback
 from datetime import timedelta
 from flask import Blueprint, jsonify, session, url_for, request
-from extensions import mysql
+from backend.utils.database_util import DatabaseUtil
 
 profile_bp = Blueprint('profile', __name__)
 
@@ -17,31 +17,27 @@ def profile():
         }), 401
 
     try:
-        cursor = mysql.connection.cursor()
+        dbutil = DatabaseUtil()
 
         # 학생 정보 조회
-        cursor.execute("""
+        student = dbutil.query("""
             SELECT student_id, student_name, grade, class, number
             FROM Students WHERE student_id = %s
-        """, (student_id,))
-        student = cursor.fetchone()
+        """, (student_id,)).result
 
         if not student:
-            cursor.close()
             return jsonify({
                 "message": "학생 정보를 찾을 수 없습니다.",
                 "status": "error"
             }), 404
 
         # 현재 대여 중인 물품 조회 컬럼명 주의!
-        cursor.execute("""
+        rentals = dbutil.query_many("""
             SELECT p.product_name, r.rental_time, r.expected_return_time, r.return_time, r.rental_status, r.rental_id, r.product_id
             FROM Rentals r
             JOIN Products p ON r.product_id = p.product_id
             WHERE r.student_id = %s
-        """, (session['session_student_id'],))
-        rentals = cursor.fetchall()
-        cursor.close()
+        """, (session['session_student_id'],)).result
 
         rental_records = [
             {
@@ -83,12 +79,11 @@ def change_password():
         return jsonify({"message": "새 비밀번호가 필요합니다.", "status": "error"}), 400
 
     try:
-        cursor = mysql.connection.cursor()
-        cursor.execute("""
+        dbutil = DatabaseUtil()
+        dbutil.query("""
             UPDATE Students SET student_pw = %s WHERE student_id = %s
         """, (new_password, student_id))
-        mysql.connection.commit()
-        cursor.close()
+        dbutil.commit()
 
         return jsonify({"message": "비밀번호가 성공적으로 변경되었습니다.", "status": "success"}), 200
 
