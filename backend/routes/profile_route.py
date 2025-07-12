@@ -17,10 +17,10 @@ def profile():
         }), 401
 
     try:
-        dbutil = DatabaseManager()
+        db = DatabaseManager()
 
         # 학생 정보 조회
-        student = dbutil.query("""
+        student = db.query("""
             SELECT student_id, student_name, grade, class, number
             FROM Students WHERE student_id = %s
         """, (student_id,)).result
@@ -32,7 +32,7 @@ def profile():
             }), 404
 
         # 현재 대여 중인 물품 조회 컬럼명 주의!
-        rentals = dbutil.query_many("""
+        rentals = db.query_many("""
             SELECT p.product_name, r.rental_time, r.expected_return_time, r.return_time, r.rental_status, r.rental_id, r.product_id
             FROM Rentals r
             JOIN Products p ON r.product_id = p.product_id
@@ -80,11 +80,11 @@ def change_password():
         return jsonify({"message": "새 비밀번호가 필요합니다.", "status": "error"}), 400
 
     try:
-        dbutil = DatabaseManager()
-        dbutil.query("""
+        db = DatabaseManager()
+        db.query("""
             UPDATE Students SET student_pw = %s WHERE student_id = %s
         """, (new_password, student_id))
-        dbutil.commit()
+        db.commit()
 
         return jsonify({"message": "비밀번호가 성공적으로 변경되었습니다.", "status": "success"}), 200
 

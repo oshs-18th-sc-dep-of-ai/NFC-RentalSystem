@@ -1,15 +1,3 @@
- -- 학생 테이블 (Students)
-CREATE TABLE IF NOT EXISTS Students (
-    student_id VARCHAR(10) PRIMARY KEY,
-    student_name VARCHAR(255) NOT NULL,
-    student_pw VARCHAR(255) NOT NULL,
-    year INT NULL,
-    grade INT NULL,
-    class INT NULL,
-    number INT NULL,
-	is_admin BOOL DEFAULT FALSE
-);
-
 INSERT INTO Students (student_id, student_name, student_pw, year, grade, class, number) VALUES
 	 ('2410101','KAN TATIANA','123456','24','1','1','1'),
 	 ('2410102','고민지','123456','24','1','1','2'),

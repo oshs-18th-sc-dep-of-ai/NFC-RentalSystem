@@ -52,19 +52,19 @@ def add_product():
     if not product_name or not category or not isinstance(quantity, int) or quantity <= 0:
         return jsonify({"message": "올바른 제품명, 카테고리, 수량을 입력하세요.", "status": "error"}), 400
 
-    dbutil = DatabaseManager()
+    db = DatabaseManager()
     
-    existing_product = dbutil.query("SELECT quantity FROM Products WHERE product_name = %s AND category = %s", (product_name, category)).result
+    existing_product = db.query("SELECT quantity FROM Products WHERE product_name = %s AND category = %s", (product_name, category)).result
 
     if existing_product:
         new_quantity = existing_product[0] + quantity
-        dbutil.query("UPDATE Products SET quantity = %s WHERE product_name = %s AND category = %s",
+        db.query("UPDATE Products SET quantity = %s WHERE product_name = %s AND category = %s",
                        (new_quantity, product_name, category))
     else:
-        dbutil.query("INSERT INTO Products (product_name, category, quantity) VALUES (%s, %s, %s)",
+        db.query("INSERT INTO Products (product_name, category, quantity) VALUES (%s, %s, %s)",
                        (product_name, category, quantity))
 
-    dbutil.commit()
+    db.commit()
 
     return jsonify({"message": f"{product_name}({quantity}개) 추가 완료!", "status": "success"}), 201
 
@@ -78,15 +78,15 @@ def delete_product(product_id):
             "redirect_url": url_for('admin.admin_login', _external=True)
         }), 403
 
-    dbutil = DatabaseManager()
+    db = DatabaseManager()
 
-    product = dbutil.query("SELECT * FROM Products WHERE product_id = %s", (product_id,)).result
+    product = db.query("SELECT * FROM Products WHERE product_id = %s", (product_id,)).result
 
     if not product:
         return jsonify({"message": "존재하지 않는 제품입니다.", "status": "error"}), 404
 
-    dbutil.query("DELETE FROM Products WHERE product_id = %s", (product_id,))
-    dbutil.commit()
+    db.query("DELETE FROM Products WHERE product_id = %s", (product_id,))
+    db.commit()
 
     return jsonify({"message": "물품이 삭제되었습니다!", "status": "success"}), 200
 
@@ -100,12 +100,12 @@ def approve_rental_return(rental_id):
             "redirect_url": url_for('admin.admin_login', _external=True)
         }), 403
 
-    dbutil = DatabaseManager()
+    db = DatabaseManager()
 
-    dbutil.query("""
+    db.query("""
         UPDATE Rentals SET rental_status = 0, rental_returntime = NOW() 
         WHERE rental_id = %s AND rental_status = 2
     """, (rental_id,))
-    dbutil.commit()
+    db.commit()
 
     return jsonify({"message": "반납이 승인되었습니다!", "status": "success"}), 200

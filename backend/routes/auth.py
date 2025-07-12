@@ -21,14 +21,14 @@ def login():
             # "admin_id": ADMIN_ID
         # }), 200
 
-    dbutil = DatabaseManager()
+    db = DatabaseManager()
 
     # 학생 로그인 처리
-    student = dbutil.query(
+    student = db.query(
         "SELECT student_id, student_name, student_pw FROM Students WHERE student_id = %(student_id)s",
         student_id=input_student_id).result
 
-    dbutil.commit()
+    db.commit()
 
     if student and str(student[2]) == str(input_password):
         session['session_student_id'] = student[0]

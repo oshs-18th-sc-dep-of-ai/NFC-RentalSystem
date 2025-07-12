@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Any, List, Optional, Self
+from typing import Any, List, Optional
 
 import pymysql
 

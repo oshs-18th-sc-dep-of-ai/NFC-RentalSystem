@@ -13,13 +13,13 @@ def rental_request_return(rental_id):
     if 'session_student_id' not in session:
         return jsonify({"message": "로그인이 필요합니다.", "status": "error"}), 401
 
-    dbutil = DatabaseManager()
+    db = DatabaseManager()
     # 반납 버튼 누른 순간의 시간 기록!
-    dbutil.query(
+    db.query(
         "UPDATE Rentals SET return_time = NOW(), rental_status = 2 WHERE rental_id = %s AND student_id = %s",
         (rental_id, session['session_student_id'])
     )
-    dbutil.commit()
+    db.commit()
     
     return jsonify({"message": "반납 요청 완료!", "status": "success"})
 
@@ -29,11 +29,11 @@ def approve_rental_return(id):
     if 'admin_id' not in session:
         return jsonify({"message": "관리자 권한이 필요합니다.", "status": "error"}), 403
 
-    dbutil = DatabaseManager()
-    dbutil.query(
+    db = DatabaseManager()
+    db.query(
         "UPDATE Rentals SET rental_status = 0 WHERE rental_id = %s AND rental_status = 2",
         (id,)
     )
-    dbutil.commit()
+    db.commit()
 
     return jsonify({"message": "반납이 승인되었습니다!", "status": "success"}), 200
