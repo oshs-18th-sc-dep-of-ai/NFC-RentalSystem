@@ -1,5 +1,5 @@
 from flask import Blueprint, request, session, jsonify
-from backend.utils.database_util import DatabaseUtil
+from utils.database_util import DatabaseManager
 # from routes.admin import ADMIN_ID, ADMIN_PASSWORD  # 관리자 계정
 
 auth_bp = Blueprint('auth', __name__)
@@ -21,7 +21,7 @@ def login():
             # "admin_id": ADMIN_ID
         # }), 200
 
-    dbutil = DatabaseUtil()
+    dbutil = DatabaseManager()
 
     # 학생 로그인 처리
     student = dbutil.query(

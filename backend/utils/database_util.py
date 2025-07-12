@@ -9,19 +9,21 @@ class QueryResult:
     affected_rows: Optional[int]
     result: Any
 
+class __DatabaseManager(type):
+    __instances = {}
+    
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls.__instances:
+            instance = super().__call__(*args, **kwargs)
+            cls.__instances[cls] = instance
+        return cls.__instances[cls]
 
-class DatabaseUtil:
+
+class DatabaseManager(metaclass=__DatabaseManager):
     """
     데이터베이스와 상호작용을 관리하는 클래스.
     오직 하나의 인스턴스만 생성됨.
     """
-    def __new__(cls, *args, **kwargs) -> Self:
-        if not hasattr(cls, '__instance'):
-            cls.__instance = super(DatabaseUtil, cls).__new__(cls)
-            cls.db_conn    = None
-            cls.cursor     = None
-        return cls.__instance
-    
     def connect(self, host: str, username: str, password: str) -> None:
         """
         데이터베이스 연결을 시도함.
@@ -73,5 +75,4 @@ class DatabaseUtil:
         :return:
         """
         self.db_conn.close()
-        self.__instance = None
         

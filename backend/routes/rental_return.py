@@ -2,7 +2,7 @@
 # 관리자가 /admin/approve_return/:id를 호출하면 최종 반납 승인 (반납 완료 상태로 변경)
 
 from flask import Blueprint, request, jsonify, session
-from backend.utils.database_util import DatabaseUtil
+from utils.database_util import DatabaseManager
 
 # 블루프린트
 rental_return_bp = Blueprint('rental_return', __name__)
@@ -13,7 +13,7 @@ def rental_request_return(rental_id):
     if 'session_student_id' not in session:
         return jsonify({"message": "로그인이 필요합니다.", "status": "error"}), 401
 
-    dbutil = DatabaseUtil()
+    dbutil = DatabaseManager()
     # 반납 버튼 누른 순간의 시간 기록!
     dbutil.query(
         "UPDATE Rentals SET return_time = NOW(), rental_status = 2 WHERE rental_id = %s AND student_id = %s",
@@ -29,7 +29,7 @@ def approve_rental_return(id):
     if 'admin_id' not in session:
         return jsonify({"message": "관리자 권한이 필요합니다.", "status": "error"}), 403
 
-    dbutil = DatabaseUtil()
+    dbutil = DatabaseManager()
     dbutil.query(
         "UPDATE Rentals SET rental_status = 0 WHERE rental_id = %s AND rental_status = 2",
         (id,)

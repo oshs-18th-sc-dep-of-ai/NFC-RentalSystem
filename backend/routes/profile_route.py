@@ -1,52 +1,94 @@
-# React에서 /profile API를 호출->  학생 정보 + 대여 목록 확인 가능!
+import traceback
+from datetime import timedelta
+from flask import Blueprint, jsonify, session, url_for, request
+from utils.database_util import DatabaseManager
 
-from flask import Blueprint, jsonify, session, url_for
-from backend.utils.database_util import DatabaseUtil
-
-# 블루프린트 
 profile_bp = Blueprint('profile', __name__)
 
-# 프로필 조회
 @profile_bp.route('/profile', methods=['GET'])
 def profile():
-    if 'session_student_id' not in session:
-        return jsonify({"message": "로그인이 필요합니다.", "status": "error", "redirect_url": url_for('outh.login', _external=True)}), 401 # 리다이렉트 추가
+    student_id = session.get('session_student_id')
 
-    dbutil = DatabaseUtil()
-    # 학생 정보 조회
-    student = dbutil.query("""
-        SELECT student_id, student_name, student_grade, student_class, student_number
-        FROM Students WHERE student_id = %s
-    """, (session['session_student_id'],)).result
+    if not student_id:
+        return jsonify({
+            "message": "로그인이 필요합니다.",
+            "status": "error",
+            "redirect_url": url_for('auth.login')
+        }), 401
 
-    # 대여한 물품 조회
-    rentals = dbutil.query_many("""
-        SELECT p.product_name, r.rental_rentaltime, r.rental_returntime, r.rental_status, r.rental_id
-        FROM Rentals r
-        JOIN Products p ON r.product_id = p.product_id
-        WHERE r.student_id = %s
-    """, (session['session_student_id'],)).result
+    try:
+        dbutil = DatabaseManager()
 
-    # 리액트에서 쉽게 사용할 수 있는 !!! JSON응답으로 바뀸~
-    rental_records = [
-        {
-            "product_name": rental[0],
-            "rental_time": rental[1].strftime('%Y-%m-%d %H:%M:%S') if rental[1] else None,
-            "return_time": rental[2].strftime('%Y-%m-%d %H:%M:%S') if rental[2] else None,
-            "status": "대여 중" if rental[3] == 1 else "반납 대기 중" if rental[3] == 2 else "반납 완료", 
-            "rental_id": rental[4],
-        }
-        for rental in rentals
-    ]
+        # 학생 정보 조회
+        student = dbutil.query("""
+            SELECT student_id, student_name, grade, class, number
+            FROM Students WHERE student_id = %s
+        """, (student_id,)).result
 
-    return jsonify({
-        "student": {
-            "student_id": student[0],
-            "student_name": student[1],
-            "student_grade": student[2],
-            "student_class": student[3],
-            "student_number": student[4]
-        },
-        "rentals": rental_records,
-        "status": "success"
-    }), 200
+        if not student:
+            return jsonify({
+                "message": "학생 정보를 찾을 수 없습니다.",
+                "status": "error"
+            }), 404
+
+        # 현재 대여 중인 물품 조회 컬럼명 주의!
+        rentals = dbutil.query_many("""
+            SELECT p.product_name, r.rental_time, r.expected_return_time, r.return_time, r.rental_status, r.rental_id, r.product_id
+            FROM Rentals r
+            JOIN Products p ON r.product_id = p.product_id
+            WHERE r.student_id = %s
+        """, (session['session_student_id'],)).result
+
+        rental_records = [
+            {
+                "product_name": rental[0],
+                "rental_time": rental[1].strftime('%Y-%m-%d %H:%M:%S') if rental[1] else None,
+                "expected_return_time": rental[2].strftime('%Y-%m-%d %H:%M:%S') if rental[2] else None,
+                "return_time": rental[3].strftime('%Y-%m-%d %H:%M:%S') if rental[3] else None,
+                "status": "대여 중" if rental[4] == 1 else "반납 대기 중" if rental[4] == 2 else "반납 완료", 
+                "rental_id": rental[5],
+                "product_id": rental[6],
+            }
+            for rental in rentals
+        ]
+
+        return jsonify({
+            "student": {
+                "student_id": student[0],
+                "student_name": student[1],
+            },
+            "rentals": rental_records
+        }), 200
+
+    except Exception as e:
+        print("❌ profile 오류 발생:", traceback.format_exc())
+        return jsonify({
+            "message": "서버 내부 오류 발생",
+            "status": "error"
+        }), 500
+        
+@profile_bp.route('/change_password', methods=['POST'])
+def change_password():
+    student_id = session.get('session_student_id')
+    if not student_id:
+        return jsonify({"message": "로그인이 필요합니다.", "status": "error"}), 401
+
+    data = request.get_json()
+    new_password = data.get('new_password')
+
+    if not new_password:
+        return jsonify({"message": "새 비밀번호가 필요합니다.", "status": "error"}), 400
+
+    try:
+        dbutil = DatabaseManager()
+        dbutil.query("""
+            UPDATE Students SET student_pw = %s WHERE student_id = %s
+        """, (new_password, student_id))
+        dbutil.commit()
+
+        return jsonify({"message": "비밀번호가 성공적으로 변경되었습니다.", "status": "success"}), 200
+
+    except Exception as e:
+        import traceback
+        print("❌ 비밀번호 변경 오류:", traceback.format_exc())
+        return jsonify({"message": "서버 오류", "status": "error"}), 500

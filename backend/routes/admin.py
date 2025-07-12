@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request, session, url_for
-from backend.utils.database_util import DatabaseUtil
+from utils.database_util import DatabaseManager
 
 import warnings
 
@@ -52,7 +52,7 @@ def add_product():
     if not product_name or not category or not isinstance(quantity, int) or quantity <= 0:
         return jsonify({"message": "올바른 제품명, 카테고리, 수량을 입력하세요.", "status": "error"}), 400
 
-    dbutil = DatabaseUtil()
+    dbutil = DatabaseManager()
     
     existing_product = dbutil.query("SELECT quantity FROM Products WHERE product_name = %s AND category = %s", (product_name, category)).result
 
@@ -78,7 +78,7 @@ def delete_product(product_id):
             "redirect_url": url_for('admin.admin_login', _external=True)
         }), 403
 
-    dbutil = DatabaseUtil()
+    dbutil = DatabaseManager()
 
     product = dbutil.query("SELECT * FROM Products WHERE product_id = %s", (product_id,)).result
 
@@ -100,7 +100,7 @@ def approve_rental_return(rental_id):
             "redirect_url": url_for('admin.admin_login', _external=True)
         }), 403
 
-    dbutil = DatabaseUtil()
+    dbutil = DatabaseManager()
 
     dbutil.query("""
         UPDATE Rentals SET rental_status = 0, rental_returntime = NOW() 
