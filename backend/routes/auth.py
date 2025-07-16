@@ -20,18 +20,19 @@ def login():
             # "status": "admin",
             # "admin_id": ADMIN_ID
         # }), 200
-
+        
     db = DatabaseManager()
 
     # 학생 로그인 처리
     student = db.query(
-        "SELECT student_id, student_name, student_pw FROM Students WHERE student_id = %(student_id)s",
+        "SELECT student_id, student_name, is_admin FROM Students" + \
+        "WHERE student_id = %(student_id)s AND student_pw=SHA2(%(student_pw)s, 256)",
         student_id=input_student_id).result
 
     db.commit()
 
     if student and str(student[2]) == str(input_password):
-        session['session_student_id'] = student[0]
+        session['session_student_id']   = student[0]
         session['session_student_name'] = student[1]
         return jsonify({
             "message": "로그인 성공!",
@@ -50,11 +51,13 @@ def login():
 @auth_bp.route('/logout', methods=['POST'])
 def logout():
     session.clear()
-    return jsonify({"message": "로그아웃 되었습니다."})
+    return jsonify({
+        "message": "로그아웃 되었습니다."
+    })
 
 
 # ✅ 세션 확인
-@auth_bp.route('/check_session', methods=['GET'])
+# @auth_bp.route('/check_session', methods=['GET'])
 def check_session():
     return jsonify({
         "admin_id": session.get("admin_id"),
