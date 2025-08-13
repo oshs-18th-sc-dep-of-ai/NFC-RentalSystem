@@ -51,54 +51,7 @@ const Content = (props) => {
     setRentalData(rentalData.filter((rental) => rental.id !== id));
   };
 
-  const [rentalData, setRentalData] = useState([
-    // 대여한 애들
-    {
-      id: "20919",
-      name: "이가연",
-      items: ["우산", "슬리퍼"],
-      count: [1, 1],
-      date: [2025, 2, 18],
-      deadline: calculateDeadline(2, 18),
-      state: false,
-    },
-    {
-      id: "20920",
-      name: "김철수",
-      items: ["우산"],
-      count: [2],
-      date: [2025, 2, 14],
-      deadline: calculateDeadline(2, 16),
-      state: false,
-    },
-    {
-      id: "20921",
-      name: "박영희",
-      items: ["슬리퍼"],
-      count: [1],
-      date: [2025, 2, 14],
-      deadline: calculateDeadline(2, 14),
-      state: false,
-    },
-    {
-      id: "20913",
-      name: "박지윤",
-      items: ["슬리퍼"],
-      count: [1],
-      date: [2025, 2, 19],
-      deadline: calculateDeadline(2, 19),
-      state: true,
-    },
-    {
-      id: "20901",
-      name: "남블리드",
-      items: ["슬리퍼"],
-      count: [1],
-      date: [2025, 2, 13],
-      deadline: calculateDeadline(2, 13),
-      state: true,
-    },
-  ]);
+  const [rentalData, setRentalData] = useState([]);
 
   rentalData.sort((a, b) => {
     const overdueA =
