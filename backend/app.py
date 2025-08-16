@@ -1,14 +1,15 @@
 from flask                 import Flask
 from flask_cors            import CORS
 from flask_session         import Session
-from utils.database_util   import DatabaseManager
-from utils.config_util     import ConfigManager as Config
 
-from routes.auth           import auth_bp
-from routes.profile_route  import profile_bp
-from routes.rental         import rental_bp
-from routes.rental_return  import rental_return_bp
-from routes.admin          import admin_bp
+from .utils.database_util import DatabaseManager
+from .utils.config_util import ConfigManager as Config
+
+from .routes.auth import auth_bp
+from .routes.profile_route import profile_bp
+from .routes.rental import rental_bp
+from .routes.rental_return import rental_return_bp
+from .routes.admin import admin_bp
 
 app = Flask(__name__)
 

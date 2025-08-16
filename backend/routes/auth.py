@@ -1,5 +1,5 @@
 from flask import Blueprint, request, session, jsonify
-from utils.database_util import DatabaseManager
+from ..utils.database_util import DatabaseManager
 # from routes.admin import ADMIN_ID, ADMIN_PASSWORD  # 관리자 계정 (필요시 사용)
 
 auth_bp = Blueprint('auth', __name__)
@@ -80,10 +80,11 @@ def logout():
 
 
 # 세션 확인
-# @auth_bp.route('/check_session', methods=['GET'])
-# def check_session():
-#     return jsonify({
-#         "admin_id": session.get("admin_id"),
-#         "student_id": session.get("session_student_id"),
-#         "student_name": session.get("session_student_name")
-#     }), 200
+
+@auth_bp.route('/check_session', methods=['GET'])
+def check_session():
+    return jsonify({
+        "admin_id": session.get("admin_id"),
+        "student_id": session.get("session_student_id"),
+        "student_name": session.get("session_student_name")
+    }), 200

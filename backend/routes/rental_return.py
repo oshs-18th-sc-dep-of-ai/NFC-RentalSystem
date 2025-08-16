@@ -2,7 +2,7 @@
 # 관리자가 /admin/approve_return/:id를 호출하면 최종 반납 승인 (반납 완료 상태로 변경)
 
 from flask import Blueprint, request, jsonify, session
-from utils.database_util import DatabaseManager
+from ..utils.database_util import DatabaseManager
 
 # 블루프린트
 rental_return_bp = Blueprint('rental_return', __name__)

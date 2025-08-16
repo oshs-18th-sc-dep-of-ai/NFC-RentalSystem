@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request, session, url_for
-from utils.database_util import DatabaseManager
+from ..utils.database_util import DatabaseManager
 
 
 admin_bp = Blueprint('admin', __name__)
