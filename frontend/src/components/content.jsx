@@ -3,7 +3,13 @@ import { Link, useLocation } from "react-router-dom";
 
 const Content = () => {
   const location = useLocation();
-  const ID = location.state?.id; 
+  // location.state에 ID가 있으면 저장, 없으면 sessionStorage에서 불러오기
+  const ID = location.state?.id || sessionStorage.getItem("ID");
+
+  // 새로 들어온 ID가 있다면 sessionStorage에 저장
+  if (location.state?.id) {
+    sessionStorage.setItem("ID", location.state.id);
+  }
 
   function IsIDManager() {
     if (ID === "caoshsadmin") {
@@ -39,7 +45,10 @@ const Content = () => {
             <div className="Dayeo">🎒양심 물품 대여하기</div>
           </Link>
           <Link to={"/Return"} state={{ ID }}>
-            <div className="Dayeo" style={{ marginTop: "10px", background: "3493ff" }}>
+            <div
+              className="Dayeo"
+              style={{ marginTop: "10px", background: "3493ff" }}
+            >
               📥양심 물품 반납하기
             </div>
           </Link>
