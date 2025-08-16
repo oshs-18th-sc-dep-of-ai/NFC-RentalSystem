@@ -8,7 +8,7 @@ import Footer from "../../components/footer";
 axios.defaults.withCredentials = true;
 
 function Home() {
-  const [isLogined, setIsLogined] = useState(null); // 로딩 중
+  const [isLogined, setIsLogined] = useState(null); // null = 로딩 중
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -25,13 +25,16 @@ function Home() {
         setIsLogined(false);
       }
     };
-
     checkSession();
   }, []);
 
-  if (isLogined === null) return <div>Loading...</div>; // 로딩 중 표시
+  // 서버 응답 전에는 화면 표시 대신 로딩 표시
+  if (isLogined === null) return <div>Loading...</div>;
+
+  // 세션이 없으면 로그인 페이지로 이동
   if (!isLogined) return <Navigate to="/Login" />;
 
+  // 세션 유효하면 홈 화면 렌더링
   return (
     <div className="Home">
       <Header />
