@@ -92,13 +92,10 @@ def change_password():
         }), 400
 
     try:
-        # 비밀번호 해싱 (bcrypt/PBKDF2)
-        hashed_pw = generate_password_hash(new_password)
-
         db = DatabaseManager()
         db.query(
-            "UPDATE Students SET student_pw=%(student_pw)s WHERE student_id=%(student_id)s",
-            student_pw=hashed_pw,
+            "UPDATE Students SET student_pw = SHA2(%(student_pw)s, 256) WHERE student_id = %(student_id)s",
+            student_pw=new_password,
             student_id=student_id
         )
         db.commit()
