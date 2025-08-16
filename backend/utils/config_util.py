@@ -1,4 +1,4 @@
-from utils.json_util import read_json
+from backend.utils.json_util import read_json
 
 
 class __ConfigManager(type):

@@ -2,7 +2,7 @@
 # 대여 가능한지 확인 후 가능하면 DB에 저장하고 상태 변경
 
 from flask import Blueprint, request, jsonify, session, url_for
-from utils.database_util import DatabaseManager
+from ..utils.database_util import DatabaseManager
 from flask_cors import cross_origin
 
 # 블루프린트 
