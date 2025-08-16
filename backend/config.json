@@ -1,0 +1,14 @@
+{
+    "Session": {
+        "Key": "testkey",
+        "Type": "filesystem",
+        "Permanent": false,
+        "UseSigner": false,
+        "KeyPrefix": "prefix"
+    },
+    "Database": {
+        "Host": "localhost",
+        "Username": "root",
+        "Password": "root"
+    }
+}
