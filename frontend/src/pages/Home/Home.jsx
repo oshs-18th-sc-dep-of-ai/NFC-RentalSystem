@@ -8,7 +8,7 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 
 function Home() {
-  const [isLogined, setIsLogined] = useState(null); // null → 로딩중
+  const [isLogined, setIsLogined] = useState(null); // 로딩중
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -18,20 +18,19 @@ function Home() {
           withCredentials: true,
         });
         if (res.data.status === "success") {
-          setUser(res.data.user); // 서버에서 준 user 정보
+          setUser(res.data.user); // 서버가 내려주는 유저 데이터
           setIsLogined(true);
         } else {
           setIsLogined(false);
         }
       } catch (err) {
-        console.error(err);
         setIsLogined(false);
       }
     };
     checkSession();
   }, []);
 
-  if (isLogined === null) return <div>Loading...</div>; // 로딩중
+  if (isLogined === null) return <div>Loading...</div>;
   if (!isLogined) return <Navigate to="/Login" />;
 
   return (

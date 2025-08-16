@@ -17,7 +17,7 @@ function Login() {
         "http://localhost:5000/login",
         {
           student_id: studentId,
-          password: password
+          password: password,
         },
         { withCredentials: true }
       );
@@ -25,7 +25,7 @@ function Login() {
       alert(response.data.message);
 
       if (response.data.status === "success") {
-        navigate("/", { state: { id: studentId } });
+        navigate("/"); // state 안 넘김
       }
     } catch (error) {
       alert("로그인 실패: " + (error.response?.data?.message || "서버 오류"));
@@ -62,7 +62,9 @@ function Login() {
           <button type="submit">로그인</button>
         </form>
 
-        <p className="info-text">기본 비밀번호는 마이페이지에서 변경할 수 있어요!</p>
+        <p className="info-text">
+          기본 비밀번호는 마이페이지에서 변경할 수 있어요!
+        </p>
       </div>
     </div>
   );
