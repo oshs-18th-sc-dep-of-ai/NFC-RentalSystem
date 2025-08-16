@@ -8,9 +8,8 @@ const Footer = () => {
           <div className="footer-links">
             <p>학생회 인스타:</p>
             <p>
-              <a href="https://www.instagram.com/os_18_sc?igsh=MWZ0ODZmNWN2OG5yNg==">
-                os_18_sc
-              </a>
+              {/* 학생회 바뀔 때마다 바꿔주기! */}
+              <a href="https://www.instagram.com/os.19.sc/">os_19_sc</a>
             </p>
           </div>
           <p>Made by AI융합부</p>

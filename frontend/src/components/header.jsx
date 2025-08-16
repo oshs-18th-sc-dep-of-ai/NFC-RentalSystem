@@ -11,7 +11,7 @@ const Header = () => {
   useEffect(() => {
     // ✅ 세션 확인 요청
     axios
-      .get("http://localhost:5000/check-session")
+      .get("http://localhost:5000/check_session")
       .then((response) => {
         if (response.data.admin_id) {
           setRole("admin"); // ✅ 관리자 로그인 상태

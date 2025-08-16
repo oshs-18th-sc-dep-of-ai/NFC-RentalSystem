@@ -1,40 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import "./B_content.css";
 
 const Content = ({ ID }) => {
-  const [items, setItems] = useState({}); // 제품 이름 → 수량
-  const [rented, setRented] = useState({}); // 제품별 대여 상태
-  const [productMapping, setProductMapping] = useState({}); // 제품 이름 → product_id 배열
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await axios.get("http://localhost:5000/products", {
-          withCredentials: true,
-        });
-        if (res.data.status === "success") {
-          const mapping = res.data.products;
-
-          setProductMapping(mapping);
-
-          // items와 rented 초기화
-          const newItems = {};
-          const newRented = {};
-          Object.keys(mapping).forEach((name) => {
-            newItems[name] = mapping[name].length;
-            newRented[name] = { total: mapping[name].length, rented: [] };
-          });
-          setItems(newItems);
-          setRented(newRented);
-        }
-      } catch (err) {
-        console.error("물품 정보 로딩 실패", err);
-      }
-    };
-
-    fetchProducts();
-  }, []);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [newItem, setNewItem] = useState({ name: "", count: 0 });
+  const [items, setItems] = useState({
+    우산: 10,
+    보조배터리: 5,
+  });
+  const [rented, setRented] = useState({
+    우산: { total: 10, rented: [] },
+    보조배터리: { total: 5, rented: [] },
+  });
+  const [toRent, setToRent] = useState([]);
+  const [toReturn, setToReturn] = useState([]);
 
   const handleItemSelect = (item) => {
     setSelectedItem(item);
@@ -77,7 +57,9 @@ const Content = ({ ID }) => {
     const selectedNumber = toRent[0] + 1;
     const productName = `${selectedItem} ${selectedNumber}`;
 
-    const product_id = productMapping[selectedItem][toRent[0]]; // 선택한 번호의 product_id 가져오기
+    let product_id = null;
+    if (selectedItem === "우산") product_id = selectedNumber;
+    else if (selectedItem === "보조배터리") product_id = 10 + selectedNumber;
 
     if (!product_id) {
       alert("product_id 매핑 오류");
