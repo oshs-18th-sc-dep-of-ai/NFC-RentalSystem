@@ -32,7 +32,7 @@ const Header = () => {
           {/* ✅ 관리자면 /UserManage로 이동, 학생이면 / 로 이동 */}
           <h1
             className="logo"
-            onClick={() => navigate(role === "admin" ? "/" : "/")}
+            onClick={() => navigate(role === "admin" ? "/UserManage" : "/")}
             style={{ cursor: "pointer" }} // 클릭 가능하게 설정
           >
             양심물품대여

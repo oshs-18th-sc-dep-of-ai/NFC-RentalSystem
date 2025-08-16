@@ -5,7 +5,7 @@ import Footer from "../../components/footer";
 import { useState } from "react";
 import { useLocation, Navigate } from "react-router-dom";
 import axios from "axios";
-axios.defaults.withCredentials = true;  // ✅ 모든 요청에 credentials 포함
+axios.defaults.withCredentials = true; // ✅ 모든 요청에 credentials 포함
 
 function Home(props) {
   const location = useLocation();
