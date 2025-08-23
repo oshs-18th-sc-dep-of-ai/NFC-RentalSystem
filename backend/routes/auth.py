@@ -86,5 +86,6 @@ def check_session():
     return jsonify({
         "admin_id": session.get("admin_id"),
         "student_id": session.get("session_student_id"),
-        "student_name": session.get("session_student_name")
+        "student_name": session.get("session_student_name"),
+        "status": "success"
     }), 200

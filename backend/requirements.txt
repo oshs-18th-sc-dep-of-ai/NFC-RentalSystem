@@ -3,3 +3,5 @@ flask_cors
 flask_session
 
 pymysql
+
+cryptography

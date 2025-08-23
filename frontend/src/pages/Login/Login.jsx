@@ -37,7 +37,7 @@ function Login() {
       <div className="container">
         <h1>로그인</h1>
         <form onSubmit={handleLogin}>
-          <label htmlFor="studentId">학번:</label>
+          <label htmlFor="studentId">학교ID:</label>
           <input
             type="text"
             id="studentId"
